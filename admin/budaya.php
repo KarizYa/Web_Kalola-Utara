@@ -1,0 +1,469 @@
+﻿<?php
+
+include '../config/koneksi.php';
+
+function uploadGalleryFiles($budayaId, $files, $conn){
+    $uploadDir = __DIR__ . '/../image/galeri/budaya/';
+    if(!is_dir($uploadDir)){
+        mkdir($uploadDir, 0755, true);
+    }
+
+    for($i = 0; $i < count($files['name']); $i++){
+        if(
+            empty($files['name'][$i]) ||
+            $files['error'][$i] !== UPLOAD_ERR_OK ||
+            empty($files['tmp_name'][$i])
+        ){
+            continue;
+        }
+
+        $galleryName = time().'_'.$i.'_'.basename($files['name'][$i]);
+
+        if(move_uploaded_file($files['tmp_name'][$i], $uploadDir.$galleryName)){
+            mysqli_query(
+                $conn,
+                "INSERT INTO budaya_galeri(budaya_id, foto) VALUES('$budayaId','$galleryName')"
+            );
+        }
+    }
+}
+
+function deleteGalleryFiles($budayaId, $conn){
+    $galleryResult = mysqli_query(
+        $conn,
+        "SELECT * FROM budaya_galeri WHERE budaya_id='$budayaId'"
+    );
+
+    while($gallery = mysqli_fetch_assoc($galleryResult)){
+        $galleryPath = __DIR__ . '/../image/galeri/budaya/'.$gallery['foto'];
+
+        if(file_exists($galleryPath) && $gallery['foto'] != ''){
+            unlink($galleryPath);
+        }
+    }
+
+    mysqli_query(
+        $conn,
+        "DELETE FROM budaya_galeri WHERE budaya_id='$budayaId'"
+    );
+}
+
+function deleteGalleryItem($galleryId, $conn){
+    $query = mysqli_query(
+        $conn,
+        "SELECT * FROM budaya_galeri WHERE id='$galleryId'"
+    );
+
+    if($gallery = mysqli_fetch_assoc($query)){
+        $galleryPath = __DIR__ . '/../image/galeri/budaya/'.$gallery['foto'];
+        if(file_exists($galleryPath) && $gallery['foto'] != ''){
+            unlink($galleryPath);
+        }
+
+        mysqli_query(
+            $conn,
+            "DELETE FROM budaya_galeri WHERE id='$galleryId'"
+        );
+
+        return $gallery['budaya_id'];
+    }
+
+    return 0;
+}
+
+if(isset($_GET['hapus_galeri'])){
+    $galleryId = (int) $_GET['hapus_galeri'];
+    $budayaId = deleteGalleryItem($galleryId, $conn);
+    header("Location: budaya.php?show_edit=".$budayaId);
+    exit;
+}
+
+if(isset($_POST['tambah'])){
+
+    $nama = mysqli_real_escape_string($conn,$_POST['nama']);
+    $deskripsi = mysqli_real_escape_string($conn,$_POST['deskripsi']);
+    $catatan = mysqli_real_escape_string($conn,$_POST['catatan']);
+
+    $foto = '';
+
+    if($_FILES['foto']['name'] != ''){
+        $foto = time().'_'.$_FILES['foto']['name'];
+        move_uploaded_file(
+            $_FILES['foto']['tmp_name'], 
+            __DIR__ . '/../image/uploads/budaya/'.$foto
+        );
+    }
+
+    mysqli_query(
+        $conn,
+        "INSERT INTO budaya(
+            nama,
+            deskripsi,
+            catatan,
+            foto
+        )
+        VALUES(
+            '$nama',
+            '$deskripsi',
+            '$catatan',
+            '$foto'
+        )"
+    );
+
+    $insertId = mysqli_insert_id($conn);
+
+    if(isset($_FILES['galeri']) && !empty($_FILES['galeri']['name'][0])){
+        uploadGalleryFiles($insertId, $_FILES['galeri'], $conn);
+    }
+
+    header("Location: budaya.php");
+    exit;
+}
+
+if(isset($_POST['edit'])){
+
+    $id = $_POST['id'];
+
+    $nama = mysqli_real_escape_string($conn,$_POST['nama']);
+    $deskripsi = mysqli_real_escape_string($conn,$_POST['deskripsi']);
+    $catatan = mysqli_real_escape_string($conn,$_POST['catatan']);
+
+    $query = mysqli_query(
+        $conn,
+        "SELECT * FROM budaya WHERE id='$id'"
+    );
+
+    $oldData = mysqli_fetch_assoc($query);
+    $foto = $oldData['foto'];
+
+    if($_FILES['foto']['name'] != ''){
+        if(
+            file_exists(__DIR__ . '/../image/uploads/budaya/'.$foto)
+            &&
+            $foto != ''
+        ){
+            unlink(__DIR__ . '/../image/uploads/budaya/'.$foto);
+        }
+
+        $foto = time().'_'.$_FILES['foto']['name'];
+        move_uploaded_file(
+            $_FILES['foto']['tmp_name'], 
+            __DIR__ . '/../image/uploads/budaya/'.$foto
+        );
+    }
+
+    if(isset($_FILES['galeri']) && !empty($_FILES['galeri']['name'][0])){
+        uploadGalleryFiles($id, $_FILES['galeri'], $conn);
+    }
+
+    mysqli_query(
+        $conn,
+        "UPDATE budaya SET
+            nama='$nama',
+            deskripsi='$deskripsi',
+            catatan='$catatan',
+            foto='$foto'
+        WHERE id='$id'"
+    );
+
+    header("Location: budaya.php");
+    exit;
+}
+
+if(isset($_GET['hapus'])){
+    $id = $_GET['hapus'];
+
+    $query = mysqli_query(
+        $conn,
+        "SELECT * FROM budaya WHERE id='$id'"
+    );
+
+    $data = mysqli_fetch_assoc($query);
+
+    if(
+        file_exists(__DIR__ . '/../image/uploads/budaya/'.$data['foto'])
+        &&
+        $data['foto'] != ''
+    ){
+        unlink(__DIR__ . '/../image/uploads/budaya/'.$data['foto']);
+    }
+
+    deleteGalleryFiles($id, $conn);
+
+    mysqli_query(
+        $conn,
+        "DELETE FROM budaya WHERE id='$id'"
+    );
+
+    header("Location: budaya.php");
+    exit;
+}
+
+$keyword = $_GET['keyword'] ?? '';
+$page = isset($_GET['page']) && is_numeric($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
+$perPage = 5;
+$offset = ($page - 1) * $perPage;
+$keyword_sql = mysqli_real_escape_string($conn, $keyword);
+
+$totalResult = mysqli_query(
+    $conn,
+    "SELECT COUNT(*) AS total FROM budaya WHERE nama LIKE '%$keyword_sql%'");
+$totalRow = mysqli_fetch_assoc($totalResult);
+$total = (int) ($totalRow['total'] ?? 0);
+$totalPages = $total > 0 ? ceil($total / $perPage) : 0;
+
+$queryBudaya = mysqli_query(
+    $conn,
+    "SELECT *
+     FROM budaya
+     WHERE nama LIKE '%$keyword_sql%'
+     ORDER BY id DESC
+     LIMIT $perPage OFFSET $offset"
+);
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelola Budaya</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<?php include '../component/navbar-admin.php'; ?>
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-3 p-0">
+<?php include '../component/sidebar-admin.php'; ?>
+</div>
+<div class="col-lg-9 admin-content">
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h2 class="fw-bold"><i class="fa-solid fa-book-open"></i> Kelola Budaya</h2>
+<button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalTambah">
+<i class="fa-solid fa-plus"></i> Tambah Budaya
+</button>
+</div>
+<form method="GET">
+<div class="row mb-4">
+<div class="col-lg-5">
+<div class="input-group">
+<input type="text" name="keyword" class="form-control" placeholder="Search..." value="<?= $keyword ?>">
+<button class="btn btn-dark">Cari</button>
+</div>
+</div>
+</div>
+</form>
+<div class="card shadow-sm border-0">
+<div class="card-body">
+<table class="table align-middle">
+<thead class="table-dark">
+<tr>
+<th width="60">No</th>
+<th>Nama Budaya</th>
+<th>Deskripsi</th>
+<th>Catatan</th>
+<th width="120">Aksi</th>
+</tr>
+</thead>
+<tbody>
+<?php $no = $offset + 1; ?>
+<?php while($row = mysqli_fetch_assoc($queryBudaya)): ?>
+<tr>
+<td><?= $no++; ?></td>
+<td>
+<div class="d-flex align-items-center">
+<img src="../image/uploads/budaya/<?= $row['foto']; ?>" width="70" height="70" class="rounded me-3" style="object-fit:cover">
+<div>
+<strong><?= $row['nama']; ?></strong><br>
+<small><?= substr($row['deskripsi'],0,80); ?>...</small>
+</div>
+</div>
+</td>
+<td><?= substr($row['deskripsi'],0,120); ?>...</td>
+<td><?= substr($row['catatan'],0,120); ?>...</td>
+<td>
+<div class="d-flex gap-1">
+<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#view<?= $row['id']; ?>">
+<i class="fa-solid fa-eye"></i>
+</button>
+<button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#edit<?= $row['id']; ?>">
+<i class="fa-solid fa-pen"></i>
+</button>
+<a href="?hapus=<?= $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus data?')">
+<i class="fa-solid fa-trash"></i>
+</a>
+</div>
+</td>
+</tr>
+<?php $galleryResult = mysqli_query($conn, "SELECT * FROM budaya_galeri WHERE budaya_id='{$row['id']}'"); ?>
+<div class="modal fade" id="edit<?= $row['id']; ?>">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<form method="POST" enctype="multipart/form-data">
+<div class="modal-header">
+<h5>Edit Budaya</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<input type="hidden" name="id" value="<?= $row['id']; ?>">
+<div class="mb-3">
+<label>Nama Budaya</label>
+<input type="text" name="nama" class="form-control" value="<?= $row['nama']; ?>">
+</div>
+<div class="mb-3">
+<label>Deskripsi</label>
+<textarea name="deskripsi" class="form-control" rows="4"><?= $row['deskripsi']; ?></textarea>
+</div>
+<div class="mb-3">
+<label>Catatan</label>
+<textarea name="catatan" class="form-control"><?= $row['catatan']; ?></textarea>
+</div>
+<div class="mb-3">
+<label>Foto Baru</label>
+<input type="file" name="foto" class="form-control">
+</div>
+<div class="mb-3">
+<label>Galeri Budaya Saat Ini</label>
+<div class="d-flex flex-wrap gap-2">
+<?php if(mysqli_num_rows($galleryResult) > 0): ?>
+<?php while($galleryItem = mysqli_fetch_assoc($galleryResult)): ?>
+<div class="position-relative" style="width:70px; height:70px;">
+<img src="../image/galeri/budaya/<?= $galleryItem['foto']; ?>" width="70" height="70" class="rounded" style="object-fit:cover;">
+<a href="?hapus_galeri=<?= $galleryItem['id']; ?>&budaya_id=<?= $row['id']; ?>" class="btn btn-danger btn-sm position-absolute top-0 end-0" style="padding:0.25rem; line-height:1;" onclick="return confirm('Hapus foto galeri ini?');">
+<i class="fa-solid fa-trash"></i>
+</a>
+</div>
+<?php endwhile; ?>
+<?php else: ?>
+<div class="text-muted">Belum ada foto galeri.</div>
+<?php endif; ?>
+</div>
+</div>
+<div class="mb-3">
+<label>Tambah Galeri Budaya</label>
+<input type="file" name="galeri[]" class="form-control" multiple>
+<small class="text-muted">Opsional, bisa pilih lebih dari satu foto.</small>
+</div>
+</div>
+<div class="modal-footer">
+<button type="submit" name="edit" class="btn btn-warning">Update</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<?php $galleryView = mysqli_query($conn, "SELECT * FROM budaya_galeri WHERE budaya_id='{$row['id']}'"); ?>
+<div class="modal fade" id="view<?= $row['id']; ?>">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5>Detail Budaya</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<div class="row">
+<div class="col-md-4">
+<img src="../image/uploads/budaya/<?= $row['foto']; ?>" class="img-fluid rounded">
+</div>
+<div class="col-md-8">
+<h4><?= $row['nama']; ?></h4>
+<p><strong>Catatan:</strong> <?= htmlspecialchars($row['catatan']); ?></p>
+<p><?= nl2br(htmlspecialchars($row['deskripsi'])); ?></p>
+</div>
+</div>
+<?php if(mysqli_num_rows($galleryView) > 0): ?>
+<div class="mt-3">
+<h6>Galeri Budaya</h6>
+<div class="d-flex flex-wrap gap-2">
+<?php while($galleryItem = mysqli_fetch_assoc($galleryView)): ?>
+<img src="../image/galeri/budaya/<?= $galleryItem['foto']; ?>" class="img-fluid rounded" style="width:120px; height:120px; object-fit:cover;">
+<?php endwhile; ?>
+</div>
+</div>
+<?php endif; ?>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+</div>
+</div>
+</div>
+</div>
+<?php endwhile; ?>
+</tbody>
+</table>
+<?php if($totalPages > 1): ?>
+<div class="mt-3">
+<nav aria-label="Page navigation">
+<ul class="pagination">
+<?php if($page > 1): ?>
+<li class="page-item"><a class="page-link" href="budaya.php?keyword=<?= urlencode($keyword) ?>&page=<?= $page-1 ?>">&laquo; Prev</a></li>
+<?php endif; ?>
+<?php for($i = 1; $i <= $totalPages; $i++): ?>
+<li class="page-item <?= $i == $page ? 'active' : '' ?>"><a class="page-link" href="budaya.php?keyword=<?= urlencode($keyword) ?>&page=<?= $i ?>"><?= $i ?></a></li>
+<?php endfor; ?>
+<?php if($page < $totalPages): ?>
+<li class="page-item"><a class="page-link" href="budaya.php?keyword=<?= urlencode($keyword) ?>&page=<?= $page+1 ?>">Next &raquo;</a></li>
+<?php endif; ?>
+</ul>
+</nav>
+</div>
+<?php endif; ?>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="modalTambah">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<form method="POST" enctype="multipart/form-data">
+<div class="modal-header">
+<h5>Tambah Budaya</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<div class="mb-3">
+<label>Nama Budaya</label>
+<input type="text" name="nama" class="form-control" required>
+</div>
+<div class="mb-3">
+<label>Deskripsi</label>
+<textarea name="deskripsi" rows="4" class="form-control" required></textarea>
+</div>
+<div class="mb-3">
+<label>Catatan</label>
+<textarea name="catatan" class="form-control" required></textarea>
+</div>
+<div class="mb-3">
+<label>Foto</label>
+<input type="file" name="foto" class="form-control" required>
+</div>
+<div class="mb-3">
+<label>Galeri Budaya</label>
+<input type="file" name="galeri[]" class="form-control" multiple>
+<small class="text-muted">Opsional, bisa pilih lebih dari satu foto.</small>
+</div>
+</div>
+<div class="modal-footer">
+<button type="submit" name="tambah" class="btn btn-dark">Simpan</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<?php if(isset($_GET['show_edit']) && is_numeric($_GET['show_edit'])): ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        var modalEl = document.getElementById('edit<?= (int) $_GET['show_edit']; ?>');
+        if(modalEl){
+            var modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        }
+    });
+</script>
+<?php endif; ?>
+</body>
+</html>

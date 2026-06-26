@@ -1,5 +1,11 @@
-<?php
+﻿<?php
 $page = "budaya";
+include __DIR__ . '/../config/koneksi.php';
+
+$queryBudaya = mysqli_query(
+    $conn,
+    "SELECT * FROM budaya ORDER BY id DESC"
+);
 ?>
 
 <!DOCTYPE html>
@@ -35,75 +41,33 @@ $page = "budaya";
     <!-- Konten Budaya -->
     <section class="pb-5">
         <div class="container">
-
             <div class="row g-4">
-
-                <!-- Tari Lulo -->
-                <div class="col-lg-6">
-
-                    <div class="budaya-card">
-
-                        <img src="img/tari-lulo.jpg"
-                             class="budaya-img"
-                             alt="Tari Lulo">
-
-                        <div class="budaya-content">
-
-                            <h4 class="budaya-card-title">
-                                Tari Lulo
-                            </h4>
-
-                            <p class="budaya-card-desc">
-                                Tari pergaulan tradisional masyarakat suku Tolaki
-                                di Kolaka Utara yang melambangkan persatuan dan
-                                kebersamaan antar sesama manusia.
-                            </p>
-
-                            <a href="detail-budaya/detail-budaya.php?id=lulo"
-                            class="budaya-link">
-                                <i class="fa-regular fa-circle-info"></i>
-                                Jelajahi Kisahnya
-                            </a>
-
+                <?php if(mysqli_num_rows($queryBudaya) > 0): ?>
+                    <?php while($row = mysqli_fetch_assoc($queryBudaya)): ?>
+                        <div class="col-lg-6">
+                            <div class="budaya-card">
+                                <img src="../image/uploads/budaya/<?= $row['foto']; ?>" class="budaya-img" alt="<?= htmlspecialchars($row['nama']); ?>">
+                                <div class="budaya-content">
+                                    <h4 class="budaya-card-title">
+                                        <?= htmlspecialchars($row['nama']); ?>
+                                    </h4>
+                                    <p class="budaya-card-desc">
+                                        <?= nl2br(htmlspecialchars(substr($row['deskripsi'], 0, 200))); ?>
+                                        <?= strlen($row['deskripsi']) > 200 ? '...' : ''; ?>
+                                    </p>
+                                    <a href="detail-budaya/detail-budaya.php?id=<?= $row['id']; ?>" class="budaya-link">
+                                        <i class="fa-regular fa-circle-info"></i>
+                                        Jelajahi Kisahnya
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <div class="col-12">
+                        <div class="alert alert-info">Belum ada data budaya. Silakan tambahkan dari halaman admin.</div>
                     </div>
-
-                </div>
-
-                <!-- Rumah Adat Mekongga -->
-                <div class="col-lg-6">
-
-                    <div class="budaya-card">
-
-                        <img src="img/rumah-adat.jpg"
-                             class="budaya-img"
-                             alt="Rumah Adat Mekongga">
-
-                        <div class="budaya-content">
-
-                            <h4 class="budaya-card-title">
-                                Rumah Adat Mekongga
-                            </h4>
-
-                            <p class="budaya-card-desc">
-                                Arsitektur khas peninggalan Kerajaan Mekongga
-                                dengan bentuk panggung dari kayu ulin yang
-                                melambangkan status sosial dan kearifan lokal
-                                dalam membangun rumah yang tahan gempa.
-                            </p>
-
-                            <a href="detail-budaya/detail-budaya.php?id=rumah-adat"
-                            class="budaya-link">
-                                <i class="fa-regular fa-circle-info"></i>
-                                Jelajahi Kisahnya
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <?php endif; ?>
 
             </div>
 
