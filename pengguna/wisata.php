@@ -1,5 +1,11 @@
 <?php
 $page = "wisata";
+include __DIR__ . '/../config/koneksi.php';
+
+$queryWisata = mysqli_query(
+    $conn,
+    "SELECT * FROM wisata ORDER BY id DESC"
+);
 ?>
 
 <!DOCTYPE html>
@@ -36,186 +42,44 @@ $page = "wisata";
         <div class="container">
 
             <div class="row g-5">
-
-                <!-- CARD 1 -->
-                <div class="col-lg-6">
-                    <div class="wisata-card">
-
-                        <div class="row g-0">
-
-                            <div class="col-4">
-                                  <img src="/project bootstrap/img/danau-biru.jpg"
-                                     class="wisata-img"
-                                     alt="Danau Biru">
-                            </div>
-
-                            <div class="col-8">
-                                <div class="card-body-custom">
-
-                                    <div class="lokasi">
-                                        <i class="fas fa-location-dot"></i>
-                                        Kecamatan Wawo
+                <?php if(mysqli_num_rows($queryWisata) > 0): ?>
+                    <?php while($row = mysqli_fetch_assoc($queryWisata)): ?>
+                        <div class="col-lg-6">
+                            <div class="wisata-card">
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <img src="../image/uploads/wisata/<?= $row['foto']; ?>"
+                                            class="wisata-img"
+                                            alt="<?= htmlspecialchars($row['nama']); ?>">
                                     </div>
-
-                                    <div class="judul-wisata mt-2">
-                                        Danau Biru Kolaka Utara
+                                    <div class="col-8">
+                                        <div class="card-body-custom">
+                                            <div class="lokasi">
+                                                <i class="fas fa-location-dot"></i>
+                                                <?= htmlspecialchars($row['alamat']); ?>
+                                            </div>
+                                            <div class="judul-wisata mt-2">
+                                                <?= htmlspecialchars($row['nama']); ?>
+                                            </div>
+                                            <p class="deskripsi mt-2">
+                                                <?= nl2br(htmlspecialchars(substr($row['deskripsi'], 0, 140))); ?>
+                                                <?= strlen($row['deskripsi']) > 140 ? '...' : ''; ?>
+                                            </p>
+                                            <a href="detail-wisata.php?id=<?= $row['id'] ?>" class="detail-link">
+                                                <i class="fa-regular fa-circle-info"></i>
+                                                Lihat Detail
+                                            </a>
+                                        </div>
                                     </div>
-
-                                    <p class="deskripsi mt-2">
-                                        Danau unik yang hanya berjarak beberapa
-                                        meter dari laut dengan air berwarna biru
-                                        pekat yang menyegarkan, dikelilingi tebing
-                                        karang yang eksotis.
-                                    </p>
-
-                                    <a href="detail-wisata/danau-biru.php" class="detail-link">
-                                    <i class="fa-regular fa-circle-info"></i>
-                                      Lihat Detail
-                                    </a>
-
                                 </div>
                             </div>
-
                         </div>
-
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <div class="col-12">
+                        <div class="alert alert-info">Belum ada data wisata. Silakan tambahkan dari halaman admin.</div>
                     </div>
-                </div>
-
-                <!-- CARD 2 -->
-                <div class="col-lg-6">
-                    <div class="wisata-card">
-
-                        <div class="row g-0">
-
-                            <div class="col-4">
-                                  <img src="/project bootstrap/img/pantai-berova.jpg"
-                                     class="wisata-img"
-                                     alt="Pantai Berova">
-                            </div>
-
-                            <div class="col-8">
-                                <div class="card-body-custom">
-
-                                    <div class="lokasi">
-                                        <i class="fas fa-location-dot"></i>
-                                        Kecamatan Lasusua
-                                    </div>
-
-                                    <div class="judul-wisata mt-2">
-                                        Pantai Berova
-                                    </div>
-
-                                    <p class="deskripsi mt-2">
-                                        Pantai berpasir putih yang indah dengan
-                                        pemandangan laut lepas Teluk Bone.
-                                        Tempat yang sempurna untuk menikmati
-                                        matahari terbenam bersama keluarga.
-                                    </p>
-
-                                    <a href="detail-wisata/pantai-berova.php" class="detail-link">
-                                        <i class="fa-regular fa-circle-info"></i>
-                                        Lihat Detail
-                                    </a>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- CARD 3 -->
-                <div class="col-lg-6">
-                    <div class="wisata-card">
-
-                        <div class="row g-0">
-
-                            <div class="col-4">
-                                  <img src="/project bootstrap/img/pulau-bintang.jpg"
-                                     class="wisata-img"
-                                     alt="Pulau Bintang">
-                            </div>
-
-                            <div class="col-8">
-                                <div class="card-body-custom">
-
-                                    <div class="lokasi">
-                                        <i class="fas fa-location-dot"></i>
-                                        Kecamatan Tolala
-                                    </div>
-
-                                    <div class="judul-wisata mt-2">
-                                        Pulau Bintang Kolaka Utara
-                                    </div>
-
-                                    <p class="deskripsi mt-2">
-                                        Pulau Bintang menawarkan banyak
-                                        keindahan panorama. Mulai dari
-                                        gugusan pulau kecil, keindahan
-                                        alam bawah laut, biota laut
-                                        bervariasi, pasir putih serta
-                                        perairan jernih.
-                                    </p>
-
-                                    <a href="detail-wisata/pulau-bintang.php    " class="detail-link">
-                                        <i class="fa-regular fa-circle-info"></i>
-                                        Lihat Detail
-                                    </a>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- CARD 4 -->
-                <div class="col-lg-6">
-                    <div class="wisata-card">
-
-                        <div class="row g-0">
-
-                            <div class="col-4">
-                                  <img src="/project bootstrap/img/mekongga.jpg"
-                                     class="wisata-img"
-                                     alt="Gunung Mekongga">
-                            </div>
-
-                            <div class="col-8">
-                                <div class="card-body-custom">
-
-                                    <div class="lokasi">
-                                        <i class="fas fa-location-dot"></i>
-                                        Kecamatan Wawo
-                                    </div>
-
-                                    <div class="judul-wisata mt-2">
-                                        Gunung Mekongga Kolaka Utara
-                                    </div>
-
-                                    <p class="deskripsi mt-2">
-                                        Gunung Mekongga di Kolaka Utara
-                                        berada di wilayah Provinsi Sulawesi
-                                        Tenggara dan merupakan kawasan
-                                        pegunungan yang tertinggi di kawasan
-                                        pegunungan Mekongga.
-                                    </p>
-
-                                    <a href="#" class="detail-link">
-                                        <i class="fa-regular fa-circle-info"></i>
-                                        Lihat Detail
-                                    </a>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
+                <?php endif; ?>
             </div>
 
         </div>

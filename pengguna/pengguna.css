@@ -137,6 +137,20 @@ body{
     object-fit: cover;
 }
 
+.detail-page{
+    padding-top: 150px;
+}
+
+@media (max-width: 576px) {
+    .detail-page {
+        padding-top: 190px;
+    }
+}
+
+.detail-title{
+    scroll-margin-top: 180px;
+}
+
 .info-card{
     background: #d9d9d9;
     border-radius: 20px;

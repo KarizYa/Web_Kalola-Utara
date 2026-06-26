@@ -2,6 +2,82 @@
 
 include '../config/koneksi.php';
 
+function uploadGalleryFiles($wisataId, $files, $conn){
+    $uploadDir = __DIR__ . '/../image/galeri/wisata/';
+    if(!is_dir($uploadDir)){
+        mkdir($uploadDir, 0755, true);
+    }
+
+    for($i = 0; $i < count($files['name']); $i++){
+        if(
+            empty($files['name'][$i]) ||
+            $files['error'][$i] !== UPLOAD_ERR_OK ||
+            empty($files['tmp_name'][$i])
+        ){
+            continue;
+        }
+
+        $galleryName = time().'_'.$i.'_'.basename($files['name'][$i]);
+
+        if(move_uploaded_file($files['tmp_name'][$i], $uploadDir.$galleryName)){
+            mysqli_query(
+                $conn,
+                "INSERT INTO wisata_galeri(wisata_id, foto) VALUES('$wisataId','$galleryName')"
+            );
+        }
+    }
+}
+
+function deleteGalleryFiles($wisataId, $conn){
+    $galleryResult = mysqli_query(
+        $conn,
+        "SELECT * FROM wisata_galeri WHERE wisata_id='$wisataId'"
+    );
+
+    while($gallery = mysqli_fetch_assoc($galleryResult)){
+        $galleryPath = __DIR__ . '/../image/galeri/wisata/'.$gallery['foto'];
+
+        if(file_exists($galleryPath) && $gallery['foto'] != ''){
+            unlink($galleryPath);
+        }
+    }
+
+    mysqli_query(
+        $conn,
+        "DELETE FROM wisata_galeri WHERE wisata_id='$wisataId'"
+    );
+}
+
+function deleteGalleryItem($galleryId, $conn){
+    $query = mysqli_query(
+        $conn,
+        "SELECT * FROM wisata_galeri WHERE id='$galleryId'"
+    );
+
+    if($gallery = mysqli_fetch_assoc($query)){
+        $galleryPath = __DIR__ . '/../image/galeri/wisata/'.$gallery['foto'];
+        if(file_exists($galleryPath) && $gallery['foto'] != ''){
+            unlink($galleryPath);
+        }
+
+        mysqli_query(
+            $conn,
+            "DELETE FROM wisata_galeri WHERE id='$galleryId'"
+        );
+
+        return $gallery['wisata_id'];
+    }
+
+    return 0;
+}
+
+if(isset($_GET['hapus_galeri'])){
+    $galleryId = (int) $_GET['hapus_galeri'];
+    $wisataId = deleteGalleryItem($galleryId, $conn);
+    header("Location: wisata.php?show_edit=".$wisataId);
+    exit;
+}
+
 //tambah data
 if(isset($_POST['tambah'])){
 
@@ -42,6 +118,12 @@ if(isset($_POST['tambah'])){
             '$foto'
         )"
     );
+
+    $insertId = mysqli_insert_id($conn);
+
+    if(isset($_FILES['galeri']) && !empty($_FILES['galeri']['name'][0])){
+        uploadGalleryFiles($insertId, $_FILES['galeri'], $conn);
+    }
 
     header("Location: wisata.php");
     exit;
@@ -86,6 +168,10 @@ if(isset($_POST['edit'])){
         );
     }
 
+    if(isset($_FILES['galeri']) && !empty($_FILES['galeri']['name'][0])){
+        uploadGalleryFiles($id, $_FILES['galeri'], $conn);
+    }
+
     mysqli_query(
         $conn,
         "UPDATE wisata SET
@@ -122,6 +208,8 @@ if(isset($_GET['hapus'])){
     ){
         unlink(__DIR__ . '/../image/uploads/wisata/'.$data['foto']);
     }
+
+    deleteGalleryFiles($id, $conn);
 
     mysqli_query(
         $conn,
@@ -378,6 +466,8 @@ Rp <?= number_format($row['harga'],0,',','.'); ?>
 
 </tr>
 
+<?php $galleryResult = mysqli_query($conn, "SELECT * FROM wisata_galeri WHERE wisata_id='{$row['id']}'"); ?>
+
 <!-- MODAL EDIT -->
 
 <div
@@ -478,19 +568,56 @@ class="form-control">
 
 </div>
 
+<div class="mb-3">
+    <label>Galeri Wisata Saat Ini</label>
+    <div class="d-flex flex-wrap gap-2">
+        <?php if(mysqli_num_rows($galleryResult) > 0): ?>
+            <?php while($galleryItem = mysqli_fetch_assoc($galleryResult)): ?>
+                <div class="position-relative" style="width:70px; height:70px;">
+                    <img
+                        src="../image/galeri/wisata/<?= $galleryItem['foto']; ?>"
+                        width="70"
+                        height="70"
+                        class="rounded"
+                        style="object-fit:cover;">
+                    <a
+                        href="?hapus_galeri=<?= $galleryItem['id']; ?>&wisata_id=<?= $row['id']; ?>"
+                        class="btn btn-danger btn-sm position-absolute top-0 end-0"
+                        style="padding:0.25rem; line-height:1;"
+                        onclick="return confirm('Hapus foto galeri ini?');">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <div class="text-muted">Belum ada foto galeri.</div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<div class="mb-3">
+
+<label>Tambah Galeri Wisata</label>
+
+<input
+	type="file"
+	name="galeri[]"
+	class="form-control"
+	multiple>
+
+<small class="text-muted">Opsional, bisa pilih lebih dari satu foto.</small>
+
+</div>
+
 </div>
 
 <div class="modal-footer">
-
-<button
-type="submit"
-name="edit"
-class="btn btn-warning">
-
-Update
-
-</button>
-
+    <button
+        type="submit"
+        name="edit"
+        class="btn btn-warning">
+        Update
+    </button>
 </div>
 
 </form>
@@ -520,6 +647,21 @@ Update
                         <p><strong>Alamat:</strong> <?= $row['alamat']; ?></p>
                         <p><strong>Harga:</strong> Rp <?= number_format($row['harga'],0,',','.'); ?></p>
                         <p><?= nl2br(htmlspecialchars($row['deskripsi'])); ?></p>
+
+                        <?php $viewGallery = mysqli_query($conn, "SELECT * FROM wisata_galeri WHERE wisata_id='{$row['id']}'"); ?>
+                        <?php if(mysqli_num_rows($viewGallery) > 0): ?>
+                            <div class="mt-3">
+                                <h6>Galeri Wisata</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <?php while($galleryItem = mysqli_fetch_assoc($viewGallery)): ?>
+                                        <img
+                                            src="../image/galeri/wisata/<?= $galleryItem['foto']; ?>"
+                                            class="img-fluid rounded"
+                                            style="width:120px; height:120px; object-fit:cover;">
+                                    <?php endwhile; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -671,19 +813,29 @@ required>
 
 </div>
 
+<div class="mb-3">
+
+<label>Galeri Wisata</label>
+
+<input
+	type="file"
+	name="galeri[]"
+	class="form-control"
+	multiple>
+
+<small class="text-muted">Opsional, bisa pilih lebih dari satu foto.</small>
+
+</div>
+
 </div>
 
 <div class="modal-footer">
-
-<button
-type="submit"
-name="tambah"
-class="btn btn-dark">
-
-Simpan
-
-</button>
-
+    <button
+        type="submit"
+        name="tambah"
+        class="btn btn-dark">
+        Simpan
+    </button>
 </div>
 
 </form>
@@ -695,6 +847,18 @@ Simpan
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<?php if(isset($_GET['show_edit']) && is_numeric($_GET['show_edit'])): ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        var modalEl = document.getElementById('edit<?= (int) $_GET['show_edit']; ?>');
+        if(modalEl){
+            var modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        }
+    });
+</script>
+<?php endif; ?>
 
 </body>
 </html>
