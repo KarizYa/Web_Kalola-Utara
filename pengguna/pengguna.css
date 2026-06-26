@@ -1,0 +1,482 @@
+.banner {
+    background: url('../image/Masjid_Lasusua_Kolaka_Utara.jpg') no-repeat center center;
+    background-size: cover;
+    height: 80vh;
+    padding-top: 8%;
+    padding-bottom: 8%;
+    color: white;
+}
+
+.garis{
+    width:100px;
+    height:4px;
+    background:#000;
+    margin-top:10px;
+}
+
+.fitur-card{
+    background:#e9e9e9;
+    border-radius:25px;
+    padding:20px;
+    transition:0.3s;
+}
+
+.fitur-card:hover{
+    transform:translateY(-5px);
+}
+
+.card-img-top{
+    height:180px;
+    object-fit:cover;
+}
+
+
+/* =========================
+   HALAMAN WISATA
+========================= */
+
+body{
+    padding-top: 70px; 
+    background-color: #f5f5f5;
+}
+
+@media (max-width: 576px) {
+    body{
+        padding-top: 110px; 
+    }
+}
+
+/* Header */
+
+.hero{
+    padding: 50px 0;
+}
+
+.hero h1{
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.hero p{
+    max-width: 700px;
+    margin: auto;
+    font-size: 1.15rem;
+    line-height: 1.5;
+}
+
+/* Card Wisata */
+
+.wisata-card{
+    background: #d9d9d9;
+    border-radius: 18px;
+    overflow: hidden;
+    height: 100%;
+    transition: 0.3s;
+}
+
+.wisata-card:hover{
+    transform: translateY(-5px);
+}
+
+.wisata-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lokasi{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.judul-wisata{
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.deskripsi{
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.detail-link{
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+
+.detail-link:hover{
+    color: #000;
+}
+
+.card-body-custom{
+    padding: 18px;
+}
+
+
+/* =========================
+   DETAIL WISATA
+========================= */
+
+.detail-title{
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.detail-desc{
+    max-width: 700px;
+    margin: auto;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.detail-hero{
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.info-card{
+    background: #d9d9d9;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.info-heading{
+    font-weight: 700;
+    text-decoration: underline;
+    margin-bottom: 15px;
+}
+
+.gallery-img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+/* =========================
+   HALAMAN BUDAYA
+========================= */
+
+.budaya-header{
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.budaya-title{
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.budaya-desc{
+    max-width: 750px;
+    margin: auto;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.budaya-card{
+    background: #d9d9d9;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.budaya-img{
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+}
+
+.budaya-content{
+    padding: 20px;
+}
+
+.budaya-card-title{
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.budaya-card-desc{
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.budaya-link{
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+}
+
+.budaya-link:hover{
+    color: #000;
+}
+
+/* =========================
+   DETAIL BUDAYA
+========================= */
+
+.detail-budaya-header{
+    padding-top: 60px;
+    padding-bottom: 50px;
+}
+
+.detail-budaya-title{
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.detail-budaya-line{
+    width: 110px;
+    height: 5px;
+    background: #000;
+    margin: 10px auto 0;
+}
+
+.sejarah-title{
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.sejarah-card{
+    background: #d9d9d9;
+    border-radius: 25px;
+    padding: 35px;
+}
+
+.sejarah-card p{
+    text-align: justify;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 0;
+}
+
+.catatan-box{
+    margin-top: 30px;
+}
+
+.catatan-title{
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.catatan-text{
+    font-weight: 500;
+    color: #333;
+}
+
+.gallery-title{
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 60px;
+    margin-bottom: 25px;
+}
+
+.gallery-card{
+    border-radius: 25px;
+    overflow: hidden;
+    background: #d9d9d9;
+}
+
+.gallery-card img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: 0.3s;
+}
+
+.gallery-card img:hover{
+    transform: scale(1.05);
+}
+
+/* =========================
+   HALAMAN INFORMASI
+========================= */
+
+.informasi-header{
+    padding-top: 60px;
+    padding-bottom: 80px;
+}
+
+.informasi-title{
+    font-size: 2.3rem;
+    font-weight: 700;
+}
+
+.informasi-line{
+    width: 140px;
+    height: 4px;
+    background: #000;
+    margin: 10px auto 20px;
+}
+
+.informasi-desc{
+    max-width: 750px;
+    margin: auto;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.informasi-card{
+    background: #d9d9d9;
+    padding: 35px 20px;
+    text-align: center;
+    height: 100%;
+    transition: 0.3s;
+}
+
+.informasi-card:hover{
+    transform: translateY(-5px);
+}
+
+.informasi-icon{
+    width: 60px;
+    height: 60px;
+    border: 1px solid #555;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.5rem;
+}
+
+.informasi-card-title{
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.informasi-card-desc{
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    min-height: 70px;
+}
+
+.informasi-link{
+    text-decoration: none;
+    color: #000;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.informasi-link:hover{
+    color: #000;
+}
+
+/* =========================
+   HALAMAN TENTANG
+========================= */
+
+.tentang-header{
+    padding-top: 60px;
+    padding-bottom: 50px;
+}
+
+.tentang-title{
+    font-size: 2.3rem;
+    font-weight: 700;
+}
+
+.tentang-line{
+    width: 110px;
+    height: 4px;
+    background: #000;
+    margin: 10px auto 0;
+}
+
+.tentang-card{
+    background: #d9d9d9;
+    overflow: hidden;
+}
+
+.tentang-content{
+    padding: 40px;
+}
+
+.tentang-subtitle{
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.tentang-content p{
+    line-height: 1.7;
+    color: #222;
+}
+
+.tentang-info{
+    margin-top: 35px;
+    font-weight: 600;
+}
+
+.tentang-img{
+    width: 100%;
+    height: 100%;
+    min-height: 450px;
+    object-fit: cover;
+}
+
+.pimpinan-section{
+    background: #d9d9d9;
+    padding: 40px;
+}
+
+.pimpinan-title{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.pimpinan-line{
+    width: 220px;
+    height: 4px;
+    background: #000;
+    margin: 10px auto 20px;
+}
+
+.pimpinan-img{
+    width: 100%;
+    max-width: 320px;
+    height: 250px;
+    object-fit: cover;
+    background: #efefef;
+}
+
+.pimpinan-card p{
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px){
+
+    .tentang-subtitle{
+        font-size: 1.7rem;
+    }
+
+    .tentang-content{
+        padding: 25px;
+    }
+
+    .tentang-img{
+        min-height: 300px;
+    }
+
+    .pimpinan-section{
+        padding: 25px;
+    }
+
+    .pimpinan-title{
+        font-size: 1.5rem;
+    }
+
+}

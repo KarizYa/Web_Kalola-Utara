@@ -1,0 +1,535 @@
+/* ==================================
+   GLOBAL
+================================== */
+
+body{
+    background-color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+/* ==================================
+   NAVBAR ADMIN
+================================== */
+
+.navbar{
+    min-height: 70px;
+}
+
+.navbar-brand{
+    text-decoration: none;
+}
+
+.navbar-brand small{
+    display: block;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.navbar .btn{
+    border-radius: 8px;
+}
+
+/* ==================================
+   SIDEBAR ADMIN
+================================== */
+
+.admin-sidebar{
+    background: #2f2f2f;
+    min-height: calc(100vh - 70px);
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 20px;
+}
+
+.admin-user{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: white;
+
+    font-size: 1.6rem;
+    font-weight: 700;
+
+    margin-bottom: 30px;
+}
+
+.admin-user i{
+    font-size: 2rem;
+}
+
+.sidebar-menu{
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-link{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    text-decoration: none;
+    color: white;
+
+    padding: 14px 16px;
+    margin-bottom: 10px;
+
+    border-radius: 10px;
+
+    font-size: 1.05rem;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.sidebar-link:hover{
+    background: #000;
+    color: white;
+}
+
+.sidebar-link.active{
+    background: #000;
+    color: white;
+}
+
+.sidebar-link i{
+    width: 25px;
+    text-align: center;
+}
+
+/* ==================================
+   FOOTER SIDEBAR
+================================== */
+
+.sidebar-footer{
+    margin-top: 30px;
+}
+
+.admin-profile{
+    background: white;
+    color: black;
+
+    border-radius: 20px;
+
+    padding: 15px;
+
+    text-align: center;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.logout-btn{
+    display: block;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    color: white;
+
+    margin-top: 20px;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.logout-btn:hover{
+    color: #ddd;
+}
+
+/* ==================================
+   CONTENT
+================================== */
+
+.admin-content{
+    padding: 30px;
+}
+
+.content-header{
+    margin-bottom: 25px;
+}
+
+.content-header h2{
+    font-size: 2rem;
+}
+
+/* ==================================
+   DASHBOARD CARD
+================================== */
+
+.dashboard-card{
+    background: #d9d9d9;
+
+    border-radius: 15px;
+
+    padding: 25px;
+
+    min-height: 180px;
+
+    transition: 0.3s;
+}
+
+.dashboard-card:hover{
+    transform: translateY(-5px);
+}
+
+.dashboard-icon{
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+}
+
+.dashboard-card h3{
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.dashboard-card p{
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* ==================================
+   REVIEW SECTION
+================================== */
+
+.review-section{
+    background: #d9d9d9;
+
+    border-radius: 15px;
+
+    padding: 25px;
+}
+
+.lihat-semua{
+    text-decoration: none;
+    color: black;
+
+    font-weight: 600;
+}
+
+.lihat-semua:hover{
+    color: black;
+}
+
+.review-item{
+    border-top: 1px solid rgba(0,0,0,0.15);
+    padding-top: 20px;
+}
+
+.review-item:first-of-type{
+    border-top: none;
+    padding-top: 0;
+}
+
+.review-text{
+    margin-top: 15px;
+    margin-bottom: 10px;
+
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.rating i{
+    color: #000;
+    margin-right: 3px;
+}
+
+/* ==================================
+   TABEL ADMIN
+   (Untuk halaman wisata,
+   budaya, kuliner, event, dll)
+================================== */
+
+.admin-table-card{
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.table thead{
+    background: #212529;
+    color: white;
+}
+
+.table th,
+.table td{
+    vertical-align: middle;
+}
+
+.table img{
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* ==================================
+   FORM ADMIN
+================================== */
+
+.admin-form-card{
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.admin-form-card label{
+    font-weight: 600;
+}
+
+.admin-form-card .form-control,
+.admin-form-card .form-select{
+    border-radius: 10px;
+}
+
+/* ==================================
+   BUTTON
+================================== */
+
+.btn-admin{
+    background: #000;
+    color: white;
+    border: none;
+}
+
+.btn-admin:hover{
+    background: #333;
+    color: white;
+}
+
+.btn-edit{
+    background: #ffc107;
+    color: black;
+}
+
+.btn-delete{
+    background: #dc3545;
+    color: white;
+}
+
+/* ==================================
+   RESPONSIVE
+================================== */
+
+@media (max-width: 991px){
+
+    .admin-sidebar{
+        min-height: auto;
+        height: auto;
+    }
+
+    .admin-content{
+        padding: 20px;
+    }
+
+    .content-header h2{
+        font-size: 1.5rem;
+    }
+
+    .dashboard-card{
+        min-height: auto;
+    }
+
+    .dashboard-icon{
+        margin-bottom: 15px;
+    }
+
+}
+
+@media (max-width: 768px){
+
+    .admin-user{
+        font-size: 1.2rem;
+    }
+
+    .sidebar-link{
+        font-size: 0.95rem;
+    }
+
+    .review-section{
+        padding: 20px;
+    }
+
+    .content-header h2{
+        font-size: 1.3rem;
+    }
+}
+
+/* ==================================
+   KELOLA WISATA
+================================== */
+
+.page-header{
+    margin-bottom: 25px;
+}
+
+.page-header h2{
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.search-box{
+    max-width: 400px;
+}
+
+.search-box .form-control{
+    border-radius: 10px 0 0 10px;
+    border: 1px solid #ddd;
+}
+
+.search-box .btn{
+    border-radius: 0 10px 10px 0;
+}
+
+/* Card tabel */
+
+.data-card{
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+/* Tabel */
+
+.table{
+    margin-bottom: 0;
+}
+
+.table thead th{
+    background: #212529;
+    color: white;
+    border: none;
+    padding: 15px;
+}
+
+.table tbody td{
+    vertical-align: middle;
+    padding: 15px;
+}
+
+.table tbody tr:hover{
+    background: #f8f9fa;
+}
+
+/* Thumbnail wisata */
+
+.wisata-thumb{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Nama wisata */
+
+.nama-wisata{
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.deskripsi-singkat{
+    font-size: 13px;
+    color: #666;
+}
+
+/* Badge kategori */
+
+.badge-kategori{
+    background: #212529;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* Tombol aksi */
+
+.btn-action{
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+}
+
+.btn-edit{
+    background: #ffc107;
+    color: black;
+}
+
+.btn-delete{
+    background: #dc3545;
+    color: white;
+}
+
+.btn-edit:hover{
+    background: #e0a800;
+}
+
+.btn-delete:hover{
+    background: #bb2d3b;
+}
+
+/* ==================================
+   MODAL CRUD
+================================== */
+
+.modal-content{
+    border: none;
+    border-radius: 20px;
+}
+
+.modal-header{
+    background: #212529;
+    color: white;
+}
+
+.modal-header .btn-close{
+    filter: invert(1);
+}
+
+.modal-body{
+    padding: 25px;
+}
+
+.modal-body label{
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.modal-body .form-control,
+.modal-body .form-select{
+    border-radius: 10px;
+    min-height: 45px;
+}
+
+.modal-body textarea{
+    resize: none;
+}
+
+.modal-footer{
+    border-top: none;
+    padding: 20px;
+}
+
+/* Preview foto */
+
+.preview-image{
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 10px;
+}
