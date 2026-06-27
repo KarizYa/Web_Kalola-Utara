@@ -97,7 +97,7 @@ $page = "beranda";
                         hidangan laut pesisir.
                     </p>
 
-                    <a href="#" class="text-dark text-decoration-none fw-semibold">
+                    <a href="kuliner.php" class="text-dark text-decoration-none fw-semibold">
                         Lihat Kuliner >
                     </a>
                 </div>
