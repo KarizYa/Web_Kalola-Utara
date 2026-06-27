@@ -52,11 +52,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </li>
 
             <li>
-                <a href="event.php"
-                   class="sidebar-link <?= ($currentPage == 'event.php') ? 'active' : ''; ?>">
+                <a href="berita.php"
+                   class="sidebar-link <?= ($currentPage == 'berita.php') ? 'active' : ''; ?>">
 
                     <i class="fa-regular fa-calendar"></i>
-                    Kelola Event
+                    Kelola Event & Berita
 
                 </a>
             </li>

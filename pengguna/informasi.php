@@ -23,6 +23,10 @@ $informasi = [
     ]
 ];
 
+include __DIR__ . '/../config/koneksi.php';
+
+$queryBerita = mysqli_query($conn, "SELECT * FROM informasi WHERE status='Publish' ORDER BY created_at DESC LIMIT 3");
+
 ?>
 
 <!DOCTYPE html>
@@ -113,61 +117,43 @@ $informasi = [
             <h3 class="fw-bold">Berita dan Event</h3>
         </div>
 
-        <a href="#" class="text-dark text-decoration-none fw-bold">
+        <a href="berita.php" class="text-dark text-decoration-none fw-bold">
             Lihat semua >
         </a>
     </div>
 
     <div class="row g-4">
-
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm">
-                <img src="/project bootstrap/img/danau.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h6 class="fw-bold">Danau Biru Kolaka Utara</h6>
-                    <p class="small text-muted">
-                        Danau unik dengan warna biru jernih yang menjadi daya tarik wisata.
-                    </p>
-
-                    <a href="#" class="text-dark text-decoration-none">
-                        Selengkapnya >
-                    </a>
+        <?php if(mysqli_num_rows($queryBerita) > 0): ?>
+            <?php while($item = mysqli_fetch_assoc($queryBerita)): ?>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <img src="../image/uploads/informasi/<?= htmlspecialchars($item['foto']); ?>" class="card-img-top" alt="<?= htmlspecialchars($item['judul']); ?>">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold mb-0"><?= htmlspecialchars($item['judul']); ?></h6>
+                                <span class="badge bg-<?= $item['jenis'] === 'Event' ? 'primary' : 'info'; ?> text-white">
+                                    <?= htmlspecialchars($item['jenis']); ?>
+                                </span>
+                            </div>
+                            <p class="small text-muted">
+                                <?= nl2br(htmlspecialchars($item['ringkasan'])); ?>
+                            </p>
+                            <?php if($item['jenis'] === 'Event'): ?>
+                                <p class="small text-muted mb-2"><i class="fas fa-calendar-days me-2"></i><?= htmlspecialchars($item['tanggal_event']); ?> <?= htmlspecialchars($item['waktu_event']); ?></p>
+                                <p class="small text-muted mb-2"><i class="fas fa-location-dot me-2"></i><?= htmlspecialchars($item['lokasi']); ?></p>
+                            <?php endif; ?>
+                            <a href="detail-berita/detail-berita.php?id=<?= $item['id']; ?>" class="text-dark text-decoration-none mt-auto">
+                                Selengkapnya >
+                            </a>
+                        </div>
+                    </div>
                 </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <div class="col-12">
+                <div class="alert alert-info">Belum ada berita atau event yang dipublish.</div>
             </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm">
-                <img src="/project bootstrap/img/pantai.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h6 class="fw-bold">Pantai Berova</h6>
-                    <p class="small text-muted">
-                        Pantai pesisir dengan panorama laut yang indah.
-                    </p>
-
-                    <a href="#" class="text-dark text-decoration-none">
-                        Selengkapnya >
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm">
-                <img src="/project bootstrap/img/pulau.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h6 class="fw-bold">Pulau Bintang</h6>
-                    <p class="small text-muted">
-                        Pulau eksotis dengan pasir putih dan laut biru.
-                    </p>
-
-                    <a href="#" class="text-dark text-decoration-none">
-                        Selengkapnya >
-                    </a>
-                </div>
-            </div>
-        </div>
-
+        <?php endif; ?>
     </div>
 </div>
 
