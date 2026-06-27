@@ -65,7 +65,7 @@ $queryWisata = mysqli_query(
                                                 <?= nl2br(htmlspecialchars(substr($row['deskripsi'], 0, 140))); ?>
                                                 <?= strlen($row['deskripsi']) > 140 ? '...' : ''; ?>
                                             </p>
-                                            <a href="detail-wisata.php?id=<?= $row['id'] ?>" class="detail-link">
+                                            <a href="detail-wisata/detail-wisata.php?id=<?= $row['id'] ?>" class="detail-link">
                                                 <i class="fa-regular fa-circle-info"></i>
                                                 Lihat Detail
                                             </a>

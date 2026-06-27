@@ -1,5 +1,18 @@
 <?php
 $page = "beranda";
+include __DIR__ . '/../config/koneksi.php';
+
+// Query untuk 3 destinasi dengan rating tertinggi
+$queryTopWisata = mysqli_query($conn, "
+    SELECT w.*, 
+           COALESCE(AVG(u.rating), 0) AS avg_rating,
+           COUNT(u.id) AS total_reviews
+    FROM wisata w
+    LEFT JOIN ulasan u ON u.wisata_id = w.id
+    GROUP BY w.id
+    ORDER BY avg_rating DESC, w.id DESC
+    LIMIT 3
+");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,15 +43,15 @@ $page = "beranda";
     <div class="container text-center">
         <div class="d-flex justify-content-center gap-5 flex-wrap">
 
-            <button class="btn btn-dark rounded-pill px-4 py-2">
+            <a href="wisata.php" class="btn btn-dark rounded-pill px-4 py-2">
                 Mulai Petualangan
                 <i class="fas fa-compass ms-2"></i>
-            </button>
+            </a>
 
-            <button class="btn btn-dark rounded-pill px-4 py-2">
+            <a href="budaya.php" class="btn btn-dark rounded-pill px-4 py-2">
                 Mengenal Budaya
                 <i class="fas fa-book-open ms-2"></i>
-            </button>
+            </a>
 
         </div>
     </div>
@@ -63,7 +76,7 @@ $page = "beranda";
                         alam Kolut siap memanjakan mata Anda.
                     </p>
 
-                    <a href="#" class="text-dark text-decoration-none fw-semibold">
+                    <a href="wisata.php" class="text-dark text-decoration-none fw-semibold">
                         Jelajahi Wisata >
                     </a>
                 </div>
@@ -80,7 +93,7 @@ $page = "beranda";
                         kebesaran budaya Tolaki-Mekongga.
                     </p>
 
-                    <a href="#" class="text-dark text-decoration-none fw-semibold">
+                    <a href="budaya.php" class="text-dark text-decoration-none fw-semibold">
                         Pelajari Budaya >
                     </a>
                 </div>
@@ -118,60 +131,47 @@ $page = "beranda";
             </p>
         </div>
 
-        <a href="#" class="text-dark text-decoration-none fw-bold">
+        <a href="wisata.php" class="text-dark text-decoration-none fw-bold">
             Lihat semua >
         </a>
     </div>
 
     <div class="row g-4">
 
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm">
-                <img src="/project bootstrap/img/danau.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h6 class="fw-bold">Danau Biru Kolaka Utara</h6>
-                    <p class="small text-muted">
-                        Danau unik dengan warna biru jernih yang menjadi daya tarik wisata.
-                    </p>
-
-                    <a href="#" class="text-dark text-decoration-none">
-                        Selengkapnya >
-                    </a>
+        <?php if(mysqli_num_rows($queryTopWisata) > 0): ?>
+            <?php while($wisata = mysqli_fetch_assoc($queryTopWisata)): ?>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <img src="../image/uploads/wisata/<?= htmlspecialchars($wisata['foto']) ?>" class="card-img-top" alt="<?= htmlspecialchars($wisata['nama']) ?>" style="height: 200px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="fw-bold"><?= htmlspecialchars($wisata['nama']) ?></h6>
+                            <p class="small text-muted"><?= htmlspecialchars(substr($wisata['deskripsi'], 0, 100)) ?>...</p>
+                            <div class="mb-3">
+                                <small class="text-warning">
+                                    <?php for($i=1; $i<=5; $i++): ?>
+                                        <?php if($i <= round($wisata['avg_rating'])): ?>
+                                            <i class="fa-solid fa-star"></i>
+                                        <?php else: ?>
+                                            <i class="fa-regular fa-star"></i>
+                                        <?php endif; ?>
+                                    <?php endfor; ?>
+                                </small>
+                                <small class="text-muted ms-1">(<?= (int)$wisata['total_reviews'] ?> ulasan)</small>
+                            </div>
+                            <div class="mt-auto">
+                                <a href="detail-wisata/detail-wisata.php?id=<?= $wisata['id'] ?>" class="text-dark text-decoration-none fw-semibold">
+                                    Selengkapnya >
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <div class="col-12">
+                <div class="alert alert-secondary">Belum ada data wisata tersedia.</div>
             </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm">
-                <img src="/project bootstrap/img/pantai.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h6 class="fw-bold">Pantai Berova</h6>
-                    <p class="small text-muted">
-                        Pantai pesisir dengan panorama laut yang indah.
-                    </p>
-
-                    <a href="#" class="text-dark text-decoration-none">
-                        Selengkapnya >
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm">
-                <img src="/project bootstrap/img/pulau.jpg" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h6 class="fw-bold">Pulau Bintang</h6>
-                    <p class="small text-muted">
-                        Pulau eksotis dengan pasir putih dan laut biru.
-                    </p>
-
-                    <a href="#" class="text-dark text-decoration-none">
-                        Selengkapnya >
-                    </a>
-                </div>
-            </div>
-        </div>
+        <?php endif; ?>
 
     </div>
 </div>
