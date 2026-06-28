@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($username === '' || $password === '') {
         $msg = 'Username dan kata sandi wajib diisi.';
     } else {
-        // Check existing
         $stmt = $pdo->prepare('SELECT id FROM admins WHERE username = ? LIMIT 1');
         $stmt->execute([$username]);
         $exists = $stmt->fetch();

@@ -24,13 +24,9 @@ if(!$selected){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($selected['judul']); ?> - Detail Informasi</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="../pengguna.css?v=2">
 </head>
 <body>
@@ -38,8 +34,6 @@ if(!$selected){
 <?php include __DIR__ . '/../../component/navbar.php'; ?>
 
 <div class="container py-5 detail-body-padding">
-
-    <!-- Breadcrumb & Back Button -->
     <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
@@ -55,8 +49,6 @@ if(!$selected){
 
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            
-            <!-- Judul & Metadata -->
             <div class="mb-4">
                 <span class="badge <?= $selected['jenis'] === 'Event' ? 'badge-event-type' : 'badge-category'; ?> px-3 py-2 mb-2">
                     <?= htmlspecialchars($selected['jenis']); ?>
@@ -72,7 +64,6 @@ if(!$selected){
                 </div>
             </div>
 
-            <!-- Banner / Gambar Utama -->
             <div class="detail-hero-wrapper mb-4">
                 <?php 
                 $foto_path = "../../image/uploads/informasi/" . $selected['foto'];
@@ -83,7 +74,6 @@ if(!$selected){
                      alt="<?= htmlspecialchars($selected['judul']); ?>">
             </div>
 
-            <!-- Ringkasan / Intro -->
             <div class="bg-white p-4 rounded-4 shadow-sm mb-4 border-start border-4 border-secondary-color">
                 <h5 class="fw-bold text-primary-color mb-2 font-serif">Ringkasan</h5>
                 <p class="mb-0 text-muted" style="line-height: 1.7; font-size: 1.05rem;">
@@ -91,7 +81,6 @@ if(!$selected){
                 </p>
             </div>
 
-            <!-- Detail Event (Jika jenisnya Event) -->
             <?php if($selected['jenis'] === 'Event'): ?>
                 <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: rgba(217, 160, 91, 0.08); border: 1px solid rgba(217, 160, 91, 0.15) !important;">
                     <div class="card-body p-4">
@@ -116,20 +105,17 @@ if(!$selected){
                 </div>
             <?php endif; ?>
 
-            <!-- Isi Berita / Artikel -->
             <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm mb-5">
                 <div class="article-content text-muted" style="line-height: 1.9; font-size: 1.05rem; text-align: justify;">
                     <?= nl2br(htmlspecialchars($selected['isi'])); ?>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 
 <?php include __DIR__ . '/../../component/footer.php'; ?>
 
-<!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -3,10 +3,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
 <aside class="admin-sidebar">
-
-    <!-- Top: User Info + Menu -->
     <div>
-        <!-- Admin User Block -->
         <div class="admin-user">
             <div class="admin-avatar">
                 <i class="fas fa-user-shield"></i>
@@ -17,10 +14,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </div>
         </div>
 
-        <!-- Menu Label -->
         <div class="sidebar-label">Main Menu</div>
 
-        <!-- Navigation -->
         <ul class="sidebar-menu">
 
             <li>
@@ -74,7 +69,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </ul>
     </div>
 
-    <!-- Bottom: Logout -->
     <div class="sidebar-footer">
         <a href="/project-bootstrap/admin/auth/logout.php" class="sidebar-logout">
             <i class="fas fa-right-from-bracket sidebar-icon"></i>

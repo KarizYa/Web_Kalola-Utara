@@ -1,12 +1,9 @@
 <?php
-// Navbar component — included in pages
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
-<!-- start navbar -->
+
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom">
   <div class="container">
-
-    <!-- Logo / Brand -->
     <a class="navbar-brand d-flex align-items-center gap-2" href="/project-bootstrap/pengguna/beranda.php">
       <div>
          <img src="../image/logo.png" alt="Logo Kolaka Utara" class="brand-logo" style="width: 50px; height: 50px; object-fit: cover;">
@@ -17,7 +14,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
       </div>
     </a>
 
-    <!-- Tombol Hamburger -->
     <button class="navbar-toggler border-0" type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent"
@@ -27,7 +23,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menu -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto gap-1">
 
@@ -103,4 +98,3 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
   </div>
 </nav>
-<!-- ending navbar -->

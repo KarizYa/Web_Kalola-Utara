@@ -1,5 +1,4 @@
 <?php
-// Database connection for admin area (PDO)
 $db_host = '127.0.0.1';
 $db_name = 'project_bootstrap';
 $db_user = 'root';
@@ -15,6 +14,5 @@ $options = [
 try {
     $pdo = new PDO($dsn, $db_user, $db_pass, $options);
 } catch (PDOException $e) {
-    // In production, avoid dumping error details
     die('Database connection failed: ' . $e->getMessage());
 }

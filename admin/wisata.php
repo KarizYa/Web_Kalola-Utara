@@ -78,7 +78,6 @@ if(isset($_GET['hapus_galeri'])){
     exit;
 }
 
-//tambah data
 if(isset($_POST['tambah'])){
 
     $nama = mysqli_real_escape_string($conn,$_POST['nama']);
@@ -128,8 +127,6 @@ if(isset($_POST['tambah'])){
     header("Location: wisata.php");
     exit;
 }
-
-//edit data
 
 if(isset($_POST['edit'])){
 
@@ -188,8 +185,6 @@ if(isset($_POST['edit'])){
     exit;
 }
 
-//hapus data
-
 if(isset($_GET['hapus'])){
 
     $id = $_GET['hapus'];
@@ -220,18 +215,14 @@ if(isset($_GET['hapus'])){
     exit;
 }
 
-//cari data
-
 $keyword = $_GET['keyword'] ?? '';
 
-// Pagination settings
 $page = isset($_GET['page']) && is_numeric($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
 $perPage = 5;
 $offset = ($page - 1) * $perPage;
 
 $keyword_sql = mysqli_real_escape_string($conn, $keyword);
 
-// total rows for pagination
 $totalResult = mysqli_query(
     $conn,
     "SELECT COUNT(*) AS total FROM wisata WHERE nama LIKE '%$keyword_sql%'");
@@ -270,8 +261,6 @@ $queryWisata = mysqli_query(
     <main class="admin-main">
     <div class="admin-content">
 
-<!-- HEADER -->
-
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold" style="font-family: var(--font);">
         <i class="fas fa-mountain-sun" style="color: var(--accent);"></i> Kelola Wisata
@@ -281,125 +270,75 @@ $queryWisata = mysqli_query(
     </button>
 </div>
 
-<!-- SEARCH -->
-
 <form method="GET">
-
 <div class="row mb-4">
-
 <div class="col-lg-5">
-
 <div class="input-group">
-
 <input
 type="text"
 name="keyword"
 class="form-control"
 placeholder="Search..."
 value="<?= $keyword ?>">
-
 <button class="btn btn-cari"><i class="fas fa-search me-1"></i>Cari</button>
-
 </div>
-
 </div>
-
 </div>
-
 </form>
 
-<!-- TABLE -->
-
 <div class="card shadow-sm border-0">
-
 <div class="card-body">
-
 <table class="table align-middle">
-
 <thead class="table-dark">
-
 <tr>
-
 <th width="60">No</th>
-
 <th>Nama Wisata</th>
-
 <th>Jenis</th>
-
 <th>Alamat</th>
-
 <th>Harga</th>
-
 <th width="120">Aksi</th>
-
 </tr>
-
 </thead>
-
 <tbody>
 
 <?php $no = $offset + 1; ?>
 <?php while($row = mysqli_fetch_assoc($queryWisata)): ?>
 
 <tr>
-
 <td><?= $no++; ?></td>
-
 <td>
-
 <div class="d-flex align-items-center">
-
 <img
 src="../image/uploads/wisata/<?= $row['foto']; ?>"
 width="70"
 height="70"
 class="rounded me-3"
 style="object-fit:cover">
-
 <div>
 
 <strong>
-
 <?= $row['nama']; ?>
-
 </strong>
-
 <br>
 
 <small>
-
 <?= substr($row['deskripsi'],0,60); ?>
-
 ...
-
 </small>
-
 </div>
-
 </div>
-
 </td>
-
 <td>
-
 <span class="badge bg-dark">
-
 <?= $row['jenis_wisata']; ?>
-
 </span>
-
 </td>
-
 <td>
-
 <?= $row['alamat']; ?>
-
 </td>
 
 <td>
-
 Rp <?= number_format($row['harga'],0,',','.'); ?>
-
 </td>
 
 <td>
@@ -430,8 +369,6 @@ Rp <?= number_format($row['harga'],0,',','.'); ?>
 </tr>
 
 <?php $galleryResult = mysqli_query($conn, "SELECT * FROM wisata_galeri WHERE wisata_id='{$row['id']}'"); ?>
-
-<!-- MODAL EDIT -->
 
 <div
 class="modal fade"
@@ -582,16 +519,11 @@ class="form-control">
         Update
     </button>
 </div>
-
 </form>
-
+</div>
+</div>
 </div>
 
-</div>
-
-</div>
-
-<!-- MODAL VIEW -->
 <div class="modal fade" id="view<?= $row['id']; ?>">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -649,13 +581,12 @@ class="form-control">
     </span>
     <nav aria-label="Page navigation">
         <ul class="pagination">
-            <!-- Prev -->
             <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
                 <a class="page-link" href="wisata.php?keyword=<?= urlencode($keyword) ?>&page=<?= $page-1 ?>" <?= $page <= 1 ? 'tabindex="-1" aria-disabled="true"' : '' ?>>
                     <i class="fas fa-chevron-left me-1"></i> Prev
                 </a>
             </li>
-            <!-- Pages with smart ellipsis -->
+
             <?php
             $range = 2;
             for($i = 1; $i <= $totalPages; $i++):
@@ -669,7 +600,7 @@ class="form-control">
             ?>
             <li class="page-item dots"><a class="page-link">…</a></li>
             <?php endif; endfor; ?>
-            <!-- Next -->
+
             <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
                 <a class="page-link" href="wisata.php?keyword=<?= urlencode($keyword) ?>&page=<?= $page+1 ?>" <?= $page >= $totalPages ? 'tabindex="-1" aria-disabled="true"' : '' ?>>
                     Next <i class="fas fa-chevron-right ms-1"></i>
@@ -681,11 +612,9 @@ class="form-control">
 <?php endif; ?>
 
     </div>
-    </div><!-- .admin-content -->
-    </main><!-- .admin-main -->
-</div><!-- .admin-wrapper -->
-
-<!-- MODAL TAMBAH -->
+    </div>
+    </main>
+</div>
 
 <div
 class="modal fade"

@@ -20,7 +20,6 @@ try {
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 } catch (Exception $e) {
-    // Query error
     header('Location: login.php?error=invalid');
     exit;
 }

@@ -1,40 +1,30 @@
-/* ============================================================
-   PESONA KOLAKA UTARA — ADMIN PANEL CSS
-   Modern Dark Sidebar Design
-   ============================================================ */
-
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
-/* ============================================================
-   CSS VARIABLES
-   ============================================================ */
-
 :root {
-    /* Emerald & Gold Palette from Pengguna */
-    --primary-emerald:  #0b2b26;      /* Deep Jungle Green */
-    --secondary-emerald:#1d5c53;      /* Medium Forest Teal */
-    --accent-gold:      #d9a05b;      /* Warm Amber Gold */
-    --accent-gold-hover:#c58d4a;      /* Darker Gold */
+    --primary-emerald:  #0b2b26;      
+    --secondary-emerald:#1d5c53;      
+    --accent-gold:      #d9a05b;      
+    --accent-gold-hover:#c58d4a;      
     
     --sidebar-bg:       var(--primary-emerald);
-    --sidebar-surface:  #10352f;      /* Lighter Deep Green for user block */
-    --sidebar-hover:    #16463e;      /* Hover state in sidebar */
+    --sidebar-surface:  #10352f;      
+    --sidebar-hover:    #16463e;      
     --sidebar-active:   var(--accent-gold);
-    --sidebar-text:     #a1b0ad;      /* Grayish green for text */
+    --sidebar-text:     #a1b0ad;      
     --sidebar-text-active: #ffffff;
     --sidebar-width:    260px;
 
     --navbar-bg:        var(--primary-emerald);
-    --navbar-height:    76px;         /* Increased navbar height */
+    --navbar-height:    76px;        
 
-    --body-bg:          #f4f7f6;      /* Soft Sage Gray */
+    --body-bg:          #f4f7f6;      
     --card-bg:          #ffffff;
-    --card-shadow:      0 4px 20px rgba(11, 43, 38, 0.05); /* Sage/Emerald tinted shadow */
+    --card-shadow:      0 4px 20px rgba(11, 43, 38, 0.05); 
     --card-radius:      16px;
 
     --accent:           var(--accent-gold);
     --accent-hover:     var(--accent-gold-hover);
-    --accent-light:     rgba(217, 160, 91, 0.12); /* Gold Light */
+    --accent-light:     rgba(217, 160, 91, 0.12); 
 
     --danger:           #ef4444;
     --danger-hover:     #dc2626;
@@ -42,18 +32,14 @@
     --warning-hover:    #d97706;
     --info:             #3b82f6;
 
-    --text-primary:     #1e293b;      /* Slate Charcoal */
+    --text-primary:     #1e293b;      
     --text-secondary:   #475569;
-    --text-muted:       #64748b;      /* Slate Muted Gray */
+    --text-muted:       #64748b;     
     --border-color:     #e2e8f0;
 
     --font:             'Plus Jakarta Sans', sans-serif;
     --transition:       0.25s cubic-bezier(.4,0,.2,1);
 }
-
-/* ============================================================
-   GLOBAL RESET
-   ============================================================ */
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -65,19 +51,11 @@ body {
     min-height: 100vh;
 }
 
-/* ============================================================
-   LAYOUT SHELL  (navbar fixed-top + sidebar fixed-left)
-   ============================================================ */
-
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
-    padding-top: var(--navbar-height); /* push below fixed navbar */
+    padding-top: var(--navbar-height); 
 }
-
-/* ============================================================
-   TOP NAVBAR
-   ============================================================ */
 
 .admin-navbar {
     position: fixed;
@@ -157,10 +135,6 @@ body {
     box-shadow: 0 4px 12px rgba(16,185,129,.35);
 }
 
-/* ============================================================
-   SIDEBAR
-   ============================================================ */
-
 .admin-sidebar {
     width: var(--sidebar-width);
     min-width: var(--sidebar-width);
@@ -181,7 +155,6 @@ body {
 .admin-sidebar::-webkit-scrollbar-track { background: transparent; }
 .admin-sidebar::-webkit-scrollbar-thumb { background: var(--sidebar-hover); border-radius: 4px; }
 
-/* Sidebar — admin user block */
 .admin-user {
     display: flex;
     align-items: center;
@@ -223,7 +196,6 @@ body {
     margin-top: 2px;
 }
 
-/* Sidebar — menu label */
 .sidebar-label {
     font-size: .65rem;
     font-weight: 700;
@@ -296,7 +268,6 @@ body {
     border-radius: 0 3px 3px 0;
 }
 
-/* Sidebar — footer / logout */
 .sidebar-footer {
     border-top: 1px solid var(--sidebar-hover);
     padding-top: 20px;
@@ -320,10 +291,6 @@ body {
     color: #fca5a5;
 }
 
-/* ============================================================
-   MAIN CONTENT AREA
-   ============================================================ */
-
 .admin-main {
     flex: 1;
     display: flex;
@@ -335,10 +302,6 @@ body {
     flex: 1;
     padding: 32px;
 }
-
-/* ============================================================
-   PAGE HEADER
-   ============================================================ */
 
 .page-header {
     margin-bottom: 28px;
@@ -365,10 +328,6 @@ body {
     color: var(--text-muted);
     margin-top: 4px;
 }
-
-/* ============================================================
-   DASHBOARD STAT CARDS
-   ============================================================ */
 
 .stat-card {
     background: var(--card-bg);
@@ -432,10 +391,6 @@ body {
     font-weight: 500;
 }
 
-/* ============================================================
-   SECTION CARDS  (review, tables, forms)
-   ============================================================ */
-
 .admin-card {
     background: var(--card-bg);
     border-radius: var(--card-radius);
@@ -465,10 +420,6 @@ body {
 .admin-card-title i { color: var(--accent); }
 
 .admin-card-body { padding: 24px; }
-
-/* ============================================================
-   REVIEW / ULASAN SECTION  (dashboard)
-   ============================================================ */
 
 .review-section {
     background: var(--card-bg);
@@ -542,10 +493,6 @@ body {
 
 .rating i { color: var(--warning); font-size: .85rem; }
 
-/* ============================================================
-   SEARCH BOX
-   ============================================================ */
-
 .search-box {
     max-width: 320px;
     position: relative;
@@ -576,10 +523,6 @@ body {
     font-size: .85rem;
     pointer-events: none;
 }
-
-/* ============================================================
-   DATA TABLE
-   ============================================================ */
 
 .data-card {
     background: var(--card-bg);
@@ -617,7 +560,6 @@ body {
     padding: 14px 16px;
 }
 
-/* Custom Colored Table Headers */
 .table thead.table-dark th {
     background-color: var(--secondary-emerald) !important;
     color: #ffffff !important;
@@ -672,10 +614,6 @@ body {
     font-size: .75rem;
     font-weight: 600;
 }
-
-/* ============================================================
-   ACTION BUTTONS
-   ============================================================ */
 
 .btn-action {
     width: 34px;
@@ -735,7 +673,6 @@ body {
     box-shadow: 0 4px 12px rgba(16,185,129,.3);
 }
 
-/* Button Cari — Gold Accent */
 .btn-cari {
     background: linear-gradient(135deg, var(--accent-gold), #e8b470);
     color: var(--primary-emerald) !important;
@@ -759,10 +696,6 @@ body {
     transform: translateY(-1px);
     box-shadow: 0 5px 15px rgba(217, 160, 91, 0.45);
 }
-
-/* ============================================================
-   FORM ADMIN
-   ============================================================ */
 
 .admin-form-card {
     background: var(--card-bg);
@@ -794,10 +727,6 @@ body {
     border-color: var(--accent);
     box-shadow: 0 0 0 3px var(--accent-light);
 }
-
-/* ============================================================
-   MODAL
-   ============================================================ */
 
 .modal-content {
     border: none;
@@ -868,16 +797,8 @@ body {
     margin-top: 8px;
 }
 
-/* ============================================================
-   ULASAN TABLE SPECIFIC
-   ============================================================ */
-
 .star-rating i { color: var(--warning); font-size: .85rem; }
 .star-empty i  { color: var(--border-color); }
-
-/* ============================================================
-   PAGINATION STYLING — Professional Tourism Style
-   ============================================================ */
 
 .pagination-wrapper {
     display: flex;
@@ -910,7 +831,6 @@ body {
     border: none !important;
 }
 
-/* Number buttons */
 .pagination .page-item .page-link {
     display: inline-flex;
     align-items: center;
@@ -939,7 +859,6 @@ body {
     transform: translateY(-1px);
 }
 
-/* Active page */
 .pagination .page-item.active .page-link {
     background: linear-gradient(135deg, var(--secondary-emerald), var(--primary-emerald)) !important;
     color: #ffffff !important;
@@ -955,7 +874,6 @@ body {
     box-shadow: 0 4px 14px rgba(29,92,83,0.35) !important;
 }
 
-/* Prev / Next arrow buttons */
 .pagination .page-item:first-child .page-link,
 .pagination .page-item:last-child .page-link {
     min-width: auto;
@@ -966,7 +884,6 @@ body {
     border-radius: 8px !important;
 }
 
-/* Ellipsis / dots */
 .pagination .page-item.dots .page-link {
     background: transparent !important;
     border-color: transparent !important;
@@ -977,7 +894,6 @@ body {
     min-width: 28px;
 }
 
-/* Disabled state */
 .pagination .page-item.disabled .page-link {
     background: #f1f5f9 !important;
     color: #b0bec5 !important;
@@ -987,10 +903,6 @@ body {
     box-shadow: none !important;
     transform: none;
 }
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
 
 @media (max-width: 991.98px) {
     .admin-sidebar {

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 include '../config/koneksi.php';
 
@@ -427,9 +427,9 @@ $queryBudaya = mysqli_query(
 </div>
 <?php endif; ?>
     </div>
-    </div><!-- .admin-content -->
-    </main><!-- .admin-main -->
-</div><!-- .admin-wrapper -->
+    </div>
+    </main>
+</div>
 <div class="modal fade" id="modalTambah">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">

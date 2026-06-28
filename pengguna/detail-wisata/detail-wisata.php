@@ -18,7 +18,6 @@ if(!$data){
 
 $gallery = mysqli_query($conn, "SELECT * FROM wisata_galeri WHERE wisata_id='$id'");
 
-// Ensure reviews table exists
 mysqli_query($conn, "CREATE TABLE IF NOT EXISTS ulasan (
     id INT AUTO_INCREMENT PRIMARY KEY,
     wisata_id INT NOT NULL,
@@ -28,12 +27,9 @@ mysqli_query($conn, "CREATE TABLE IF NOT EXISTS ulasan (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
-// Handle review submission (guest reviews with random name or user input)
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_ulasan'])){
     $rating = isset($_POST['rating']) ? (int) $_POST['rating'] : 0;
     $komentar = mysqli_real_escape_string($conn, $_POST['komentar'] ?? '');
-    
-    // Get visitor name, default to Guest if empty
     $nama_input = trim($_POST['nama_pengunjung'] ?? '');
     if (empty($nama_input)) {
         $nama = 'Pengunjung' . substr(md5(uniqid('', true)), 0, 4);
@@ -47,7 +43,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_ulasan'])){
     exit;
 }
 
-// Load reviews and stats
 $avgResult = mysqli_query($conn, "SELECT AVG(rating) AS avg_rating, COUNT(*) AS total FROM ulasan WHERE wisata_id='$id'");
 $avgRow = mysqli_fetch_assoc($avgResult);
 $avg_rating = $avgRow && $avgRow['avg_rating'] ? round($avgRow['avg_rating'], 1) : 0;
@@ -61,13 +56,9 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($data['nama']) ?> - Detail Wisata</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="../pengguna.css?v=3">
 </head>
 <body>
@@ -75,8 +66,6 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
 <?php include __DIR__ . '/../../component/navbar.php'; ?>
 
 <div class="container py-5 detail-body-padding">
-    
-    <!-- Breadcrumb & Back Button -->
     <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
@@ -90,7 +79,6 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
         </a>
     </div>
 
-    <!-- Judul & Deskripsi Singkat -->
     <div class="text-center mb-5">
         <span class="badge bg-category text-dark px-3 py-2 mb-2">
             <?= htmlspecialchars($data['jenis_wisata']); ?>
@@ -101,7 +89,6 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
         <div class="garis-aesthetic mx-auto mb-3"></div>
     </div>
 
-    <!-- Gambar Utama -->
     <div class="detail-hero-wrapper mb-5">
         <?php 
         $foto_path = "../../image/uploads/wisata/" . $data['foto'];
@@ -113,7 +100,6 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
     </div>
 
     <div class="row g-5">
-        <!-- Kolom Kiri: Deskripsi & Galeri -->
         <div class="col-lg-8">
             <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm mb-5">
                 <h3 class="fw-bold text-primary-color mb-4 font-serif">Deskripsi Destinasi</h3>
@@ -122,7 +108,6 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
                 </p>
             </div>
 
-            <!-- Gallery -->
             <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm mb-5">
                 <h3 class="fw-bold text-primary-color mb-4 font-serif">Galeri Foto</h3>
                 <div class="row g-3">
@@ -144,11 +129,8 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
             </div>
         </div>
 
-        <!-- Kolom Kanan: Info Ringkas & Form Ulasan -->
         <div class="col-lg-4">
-            <!-- Sticky Sidebar Container -->
             <div class="position-sticky" style="top: 100px;">
-                <!-- Card Informasi Wisata -->
                 <div class="detail-info-card mb-4">
                     <h5 class="fw-bold text-primary-color mb-4 font-serif border-bottom pb-2">Detail Informasi</h5>
                     <div class="d-flex flex-column gap-3">
@@ -167,7 +149,6 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
                     </div>
                 </div>
 
-                <!-- Card Ringkasan Ulasan -->
                 <div class="reviews-summary-box">
                     <h5 class="fw-bold text-primary-color mb-4 font-serif border-bottom pb-2">Ulasan Pengunjung</h5>
                     <div class="d-flex align-items-center gap-3 mb-4">
@@ -189,7 +170,6 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
                         </div>
                     </div>
 
-                    <!-- List Ulasan Terbatas (max 3, selengkapnya bisa discroll) -->
                     <div class="reviews-list-container mb-4" style="max-height: 280px; overflow-y: auto; padding-right: 5px;">
                         <?php if(mysqli_num_rows($reviews) === 0): ?>
                             <p class="text-muted small text-center py-3">Belum ada ulasan. Jadilah yang pertama memberikan ulasan!</p>
@@ -221,7 +201,6 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
                         <?php endif; ?>
                     </div>
 
-                    <!-- Form Tambah Ulasan -->
                     <div class="border-top pt-3">
                         <h6 class="fw-bold text-primary-color mb-3">Tulis Ulasan Anda</h6>
                         <form method="POST">
@@ -256,7 +235,6 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
 
 <?php include __DIR__ . '/../../component/footer.php'; ?>
 
-<!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

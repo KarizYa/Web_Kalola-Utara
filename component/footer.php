@@ -1,9 +1,7 @@
-<!-- start footer -->
 <footer class="footer bg-dark text-white pt-5 pb-4 mt-5">
   <div class="container text-md-left">
     <div class="row text-md-left">
       
-      <!-- Column 1: Brand & Description -->
       <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-accent">PESONA KOLUT</h5>
         <p class="text-white-50" style="font-size: 14px; line-height: 1.6;">
@@ -11,7 +9,6 @@
         </p>
       </div>
 
-      <!-- Column 2: Quick Links -->
       <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-accent">Navigasi</h5>
         <p class="mb-2">
@@ -34,7 +31,6 @@
         </p>
       </div>
 
-      <!-- Column 3: Contact Info -->
       <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-accent">Hubungi Kami</h5>
         <p class="text-white-50" style="font-size: 14px;">
@@ -48,7 +44,6 @@
         </p>
       </div>
 
-      <!-- Column 4: Social Media -->
       <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-accent">Ikuti Kami</h5>
         <div class="d-flex gap-3">
@@ -66,10 +61,8 @@
 
     </div>
 
-    <!-- Divider -->
     <hr class="mb-4 mt-4" style="background-color: rgba(255,255,255,0.1);">
 
-    <!-- Copyright -->
     <div class="row align-items-center">
       <div class="col-md-7 col-lg-8">
         <p class="text-white-50" style="font-size: 13px;">
@@ -88,4 +81,3 @@
 
   </div>
 </footer>
-<!-- ending footer -->

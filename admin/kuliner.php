@@ -332,9 +332,9 @@ $queryKuliner = mysqli_query($conn, "SELECT * FROM kuliner WHERE nama LIKE '%$ke
                 </div>
             </div>
     </div>
-    </div><!-- .admin-content -->
-    </main><!-- .admin-main -->
-</div><!-- .admin-wrapper -->
+    </div>
+    </main>
+</div>
 
 <div class="modal fade" id="modalTambah">
     <div class="modal-dialog modal-lg">

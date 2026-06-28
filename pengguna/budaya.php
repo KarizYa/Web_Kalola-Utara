@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $page = "budaya";
 include __DIR__ . '/../config/koneksi.php';
 
@@ -14,20 +14,15 @@ $queryBudaya = mysqli_query(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warisan Budaya Kaloka Utara</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="pengguna.css?v=3">
 </head>
 <body>
 
 <?php include __DIR__ . '/../component/navbar.php'; ?>
 
-<!-- Header -->
 <section class="hero-page text-center">
     <div class="container">
         <h1 class="display-4 fw-bold">Warisan Budaya</h1>
@@ -38,7 +33,6 @@ $queryBudaya = mysqli_query(
     </div>
 </section>
 
-<!-- Konten Budaya -->
 <section class="py-5">
     <div class="container py-4">
         
@@ -101,7 +95,6 @@ $queryBudaya = mysqli_query(
 
 <?php include __DIR__ . '/../component/footer.php'; ?>
 
-<!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

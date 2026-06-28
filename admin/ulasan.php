@@ -1,20 +1,17 @@
 <?php
 include '../config/koneksi.php';
 
-// Hapus ulasan
 if(isset($_GET['hapus'])){
     $id = (int) $_GET['hapus'];
     $q = mysqli_query($conn, "SELECT * FROM ulasan WHERE id='$id'");
     if(mysqli_num_rows($q) > 0){
         mysqli_query($conn, "DELETE FROM ulasan WHERE id='$id'");
     }
-    // preserve filters when redirecting
     $redirect = 'ulasan.php';
     header('Location: ' . $redirect);
     exit;
 }
 
-// Filters and pagination
 $wisata_filter = isset($_GET['wisata_id']) ? (int) $_GET['wisata_id'] : 0;
 $rating_filter = isset($_GET['rating']) ? (int) $_GET['rating'] : 0;
 $page = isset($_GET['page']) && (int)$_GET['page'] > 0 ? (int)$_GET['page'] : 1;
@@ -27,7 +24,6 @@ if($rating_filter > 0) $where[] = "u.rating='{$rating_filter}'";
 $where_sql = '';
 if(count($where) > 0) $where_sql = 'WHERE ' . implode(' AND ', $where);
 
-// total count
 $totalQ = mysqli_query($conn, "SELECT COUNT(*) AS total FROM ulasan u {$where_sql}");
 $totalRow = mysqli_fetch_assoc($totalQ);
 $total = (int) ($totalRow['total'] ?? 0);
@@ -35,10 +31,9 @@ $totalPages = $total > 0 ? ceil($total / $perPage) : 0;
 
 $query = mysqli_query($conn, "SELECT u.*, w.nama AS wisata_name FROM ulasan u LEFT JOIN wisata w ON w.id = u.wisata_id {$where_sql} ORDER BY u.created_at DESC LIMIT {$perPage} OFFSET {$offset}");
 
-// fetch wisata list for filter
 $wisataList = mysqli_query($conn, "SELECT id, nama FROM wisata ORDER BY nama ASC");
-
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -137,7 +132,6 @@ $wisataList = mysqli_query($conn, "SELECT id, nama FROM wisata ORDER BY nama ASC
                                 </td>
                             </tr>
 
-                            <!-- Modal view -->
                             <div class="modal fade" id="view<?= $row['id'] ?>" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog modal-lg modal-dialog-centered">
                                     <div class="modal-content">
@@ -207,9 +201,9 @@ $wisataList = mysqli_query($conn, "SELECT id, nama FROM wisata ORDER BY nama ASC
                 </div>
             </div>
     </div>
-    </div><!-- .admin-content -->
-    </main><!-- .admin-main -->
-</div><!-- .admin-wrapper -->
+    </div>
+    </main>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

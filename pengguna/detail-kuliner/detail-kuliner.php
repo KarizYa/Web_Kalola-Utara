@@ -28,13 +28,9 @@ function formatHarga($harga) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($item['nama']); ?> - Detail Kuliner</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="../pengguna.css?v=2">
 </head>
 <body>
@@ -42,8 +38,6 @@ function formatHarga($harga) {
 <?php include __DIR__ . '/../../component/navbar.php'; ?>
 
 <div class="container py-5 detail-body-padding">
-    
-    <!-- Breadcrumb & Back Button -->
     <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
@@ -57,7 +51,6 @@ function formatHarga($harga) {
         </a>
     </div>
 
-    <!-- Judul & Deskripsi -->
     <div class="text-center mb-5">
         <span class="badge bg-category text-dark px-3 py-2 mb-2">
              KULINER KHAS
@@ -69,7 +62,6 @@ function formatHarga($harga) {
     </div>
 
     <div class="row g-5">
-        <!-- Kolom Kiri: Foto Utama & Deskripsi -->
         <div class="col-lg-8">
             <div class="detail-hero-wrapper mb-5">
                 <?php 
@@ -79,7 +71,6 @@ function formatHarga($harga) {
                 <img src="<?= $foto_url; ?>" class="img-fluid w-100" alt="<?= htmlspecialchars($item['nama']); ?>">
             </div>
 
-            <!-- Deskripsi Kuliner -->
             <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm mb-5">
                 <h3 class="fw-bold text-primary-color mb-4 font-serif"><i class="fas fa-utensils text-accent me-2"></i>Mengenai Kuliner</h3>
                 <p class="text-muted" style="line-height: 1.8; text-align: justify;">
@@ -87,7 +78,6 @@ function formatHarga($harga) {
                 </p>
             </div>
             
-            <!-- Sejarah Singkat Kuliner -->
             <?php if (!empty($item['sejarah'])): ?>
                 <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm mb-5">
                     <h3 class="fw-bold text-primary-color mb-4 font-serif"><i class="fas fa-history text-accent me-2"></i>Sejarah Singkat</h3>
@@ -97,7 +87,6 @@ function formatHarga($harga) {
             <?php endif; ?>
         </div>
 
-        <!-- Kolom Kanan: Detail Informasi (Sticky) -->
         <div class="col-lg-4">
             <div class="position-sticky" style="top: 100px;">
                 <div class="detail-info-card">
@@ -124,7 +113,6 @@ function formatHarga($harga) {
 
 <?php include __DIR__ . '/../../component/footer.php'; ?>
 
-<!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

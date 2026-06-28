@@ -33,20 +33,15 @@ $queryBerita = mysqli_query($conn, "SELECT * FROM informasi WHERE status='Publis
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informasi Kaloka Utara</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="pengguna.css?v=3">
 </head>
 <body>
 
 <?php include __DIR__ . '/../component/navbar.php'; ?>
 
-<!-- Header -->
 <section class="hero-page text-center">
     <div class="container">
         <h1 class="display-4 fw-bold">Informasi Kolaka Utara</h1>
@@ -57,7 +52,6 @@ $queryBerita = mysqli_query($conn, "SELECT * FROM informasi WHERE status='Publis
     </div>
 </section>
 
-<!-- Informasi Stats -->
 <section class="py-5">
     <div class="container py-4">
         <div class="row g-4 justify-content-center">
@@ -78,13 +72,11 @@ $queryBerita = mysqli_query($conn, "SELECT * FROM informasi WHERE status='Publis
     </div>
 </section>
 
-<!-- Berita dan Event -->
 <div class="container py-5 mb-5">
     <div class="mb-4">
         <h2 class="fw-bold display-5 text-primary-color mb-1">Berita dan Event</h2>
         <p class="text-muted mb-0">Informasi terbaru dan kegiatan seru yang berlangsung di Kolaka Utara.</p>
     </div>
-
 
     <div class="row g-4 align-items-stretch">
         <?php if(mysqli_num_rows($queryBerita) > 0): ?>
@@ -117,7 +109,6 @@ $queryBerita = mysqli_query($conn, "SELECT * FROM informasi WHERE status='Publis
                                         <p class="text-muted mb-0"><i class="fas fa-location-dot me-2 text-accent"></i><?= htmlspecialchars($item['lokasi']); ?></p>
                                     </div>
                                 <?php else: ?>
-                                    <!-- Placeholder agar tinggi sejajar dengan kartu Event -->
                                     <div class="mb-3 p-2 rounded-3" style="font-size: 0.85rem; visibility: hidden;">
                                         <p class="mb-1">-</p>
                                         <p class="mb-0">-</p>
@@ -152,7 +143,6 @@ $queryBerita = mysqli_query($conn, "SELECT * FROM informasi WHERE status='Publis
 
 <?php include __DIR__ . '/../component/footer.php'; ?>
 
-<!-- Bootstrap Bundle JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

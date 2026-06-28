@@ -7,7 +7,6 @@ if (empty($_SESSION['admin_logged_in'])) {
 
 include __DIR__ . '/../config/koneksi.php';
 
-// Hitung total dari tabel nyata
 $row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM wisata"));
 $totalWisata = $row ? (int)$row['total'] : 0;
 
@@ -20,7 +19,6 @@ $totalKuliner = $row ? (int)$row['total'] : 0;
 $row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM ulasan"));
 $totalUlasan = $row ? (int)$row['total'] : 0;
 
-// Ambil ulasan terbaru
 $ulasanTerbaru = [];
 $q = "SELECT u.nama, COALESCE(w.nama, '-') AS tempat, u.komentar AS ulasan, u.rating,
              DATE_FORMAT(u.created_at, '%d/%m/%Y') AS tanggal
@@ -41,30 +39,16 @@ if ($res) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin — Pesona Kolaka Utara</title>
-
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- Admin CSS -->
     <link rel="stylesheet" href="admin.css?v=2">
 </head>
 <body>
-
-    <!-- Navbar -->
     <?php include '../component/navbar-admin.php'; ?>
-
-    <!-- Wrapper -->
     <div class="admin-wrapper">
-
-        <!-- Sidebar -->
         <?php include '../component/sidebar-admin.php'; ?>
-
-        <!-- Main Content -->
         <main class="admin-main">
             <div class="admin-content">
-
-                <!-- Page Header -->
                 <div class="content-header mb-4">
                     <h2>
                         <i class="fas fa-chart-line"></i>
@@ -73,9 +57,7 @@ if ($res) {
                     <p class="page-title-sub">Selamat datang kembali, Administrator!</p>
                 </div>
 
-                <!-- Stat Cards -->
                 <div class="row g-4 mb-4">
-
                     <div class="col-sm-6 col-xl-3">
                         <div class="stat-card">
                             <div class="stat-icon">
@@ -115,10 +97,8 @@ if ($res) {
                             <div class="stat-label">Total Ulasan</div>
                         </div>
                     </div>
-
                 </div>
 
-                <!-- Ulasan Terbaru -->
                 <div class="review-section">
                     <div class="review-header">
                         <h2>
@@ -164,7 +144,7 @@ if ($res) {
             </div>
         </main>
 
-    </div><!-- .admin-wrapper -->
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
