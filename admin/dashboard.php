@@ -5,20 +5,34 @@ if (empty($_SESSION['admin_logged_in'])) {
     exit;
 }
 
-$totalWisata = 3;
-$totalBudaya = 1;
-$totalKuliner = 2;
-$totalUlasan = 2;
+include __DIR__ . '/../config/koneksi.php';
 
-$ulasanTerbaru = [
-    [
-        "nama" => "Budi Santoso",
-        "tempat" => "Danau Biru Kolaka Utara",
-        "ulasan" => "Danau Biru sangat indah dan airnya segar! Tempatnya cukup bersih.",
-        "rating" => 5,
-        "tanggal" => "15/10/2023"
-    ]
-];
+// Hitung total dari tabel nyata
+$row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM wisata"));
+$totalWisata = $row ? (int)$row['total'] : 0;
+
+$row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM budaya"));
+$totalBudaya = $row ? (int)$row['total'] : 0;
+
+$row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM kuliner"));
+$totalKuliner = $row ? (int)$row['total'] : 0;
+
+$row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM ulasan"));
+$totalUlasan = $row ? (int)$row['total'] : 0;
+
+// Ambil ulasan terbaru (join ke wisata untuk menampilkan nama tempat jika tersedia)
+$ulasanTerbaru = [];
+$q = "SELECT u.nama, COALESCE(w.nama, '-') AS tempat, u.komentar AS ulasan, u.rating, DATE_FORMAT(u.created_at, '%d/%m/%Y') AS tanggal
+      FROM ulasan u
+      LEFT JOIN wisata w ON u.wisata_id = w.id
+    ORDER BY u.created_at DESC
+    LIMIT 1";
+$res = mysqli_query($conn, $q);
+if($res){
+    while($r = mysqli_fetch_assoc($res)){
+        $ulasanTerbaru[] = $r;
+    }
+}
 
 ?>
 <!DOCTYPE html>

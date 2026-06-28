@@ -125,10 +125,15 @@ $wisataList = mysqli_query($conn, "SELECT id, nama FROM wisata ORDER BY nama ASC
                                 <td style="max-width:300px;"><?= nl2br(htmlspecialchars(strlen($row['komentar']) > 180 ? substr($row['komentar'],0,180) . '...' : $row['komentar'])); ?></td>
                                 <td><?= htmlspecialchars(date('d M Y H:i', strtotime($row['created_at']))); ?></td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#view<?= $row['id'] ?>">Lihat</button>
-                                    <a href="?hapus=<?= $row['id']; ?>&wisata_id=<?= $wisata_filter ?>&rating=<?= $rating_filter ?>&page=<?= $page ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus ulasan ini?');">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
+                                    <div class="d-flex gap-1">
+                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#view<?= $row['id'] ?>" title="Lihat">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+
+                                        <a href="?hapus=<?= $row['id']; ?>&wisata_id=<?= $wisata_filter ?>&rating=<?= $rating_filter ?>&page=<?= $page ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus ulasan ini?');" title="Hapus">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
 
