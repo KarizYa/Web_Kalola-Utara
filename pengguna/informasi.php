@@ -80,56 +80,63 @@ $queryBerita = mysqli_query($conn, "SELECT * FROM informasi WHERE status='Publis
 
 <!-- Berita dan Event -->
 <div class="container py-5 mb-5">
-    <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
-        <div>
-            <h2 class="fw-bold display-5 text-primary-color mb-1">Berita dan Event</h2>
-            <p class="text-muted mb-0">Informasi terbaru dan kegiatan seru yang berlangsung di Kolaka Utara.</p>
-        </div>
-        <a href="berita.php" class="btn btn-outline-dark rounded-pill px-4 fw-bold">
-            Lihat semua <i class="fas fa-arrow-right ms-1" style="font-size: 0.8rem;"></i>
-        </a>
+    <div class="mb-4">
+        <h2 class="fw-bold display-5 text-primary-color mb-1">Berita dan Event</h2>
+        <p class="text-muted mb-0">Informasi terbaru dan kegiatan seru yang berlangsung di Kolaka Utara.</p>
     </div>
 
-    <div class="row g-4">
+
+    <div class="row g-4 align-items-stretch">
         <?php if(mysqli_num_rows($queryBerita) > 0): ?>
             <?php while($item = mysqli_fetch_assoc($queryBerita)): ?>
                 <div class="col-md-4">
-                    <div class="card wisata-card-modern">
-                        <div class="wisata-img-wrapper">
-                            <?php 
-                            $foto_path = "../image/uploads/informasi/" . $item['foto'];
-                            $foto_url = (!empty($item['foto']) && file_exists(__DIR__ . '/' . $foto_path)) ? $foto_path : '../image/default-berita.png';
-                            ?>
-                            <img src="<?= $foto_url; ?>" class="img-fluid" alt="<?= htmlspecialchars($item['judul']); ?>" style="height: 220px; width: 100%; object-fit: cover;">
-                            <span class="badge-tag <?= $item['jenis'] === 'Event' ? 'bg-warning text-dark' : 'bg-info text-white'; ?>">
-                                <?= htmlspecialchars($item['jenis']); ?>
-                            </span>
-                        </div>
-                        <div class="wisata-info-body d-flex flex-column">
-                            <h5 class="mb-2">
-                                <a href="detail-berita/detail-berita.php?id=<?= $item['id']; ?>" class="wisata-title-link">
-                                    <?= htmlspecialchars($item['judul']); ?>
-                                </a>
-                            </h5>
-                            <p class="desc text-muted mb-3">
-                                <?= htmlspecialchars(substr($item['ringkasan'], 0, 100)); ?>...
-                            </p>
-                            
-                            <?php if($item['jenis'] === 'Event'): ?>
-                                <div class="mb-3 p-2 bg-light rounded-3" style="font-size: 0.85rem;">
-                                    <p class="text-muted mb-1"><i class="fas fa-calendar-days me-2 text-accent"></i><?= htmlspecialchars($item['tanggal_event']); ?> (<?= htmlspecialchars($item['waktu_event']); ?>)</p>
-                                    <p class="text-muted mb-0"><i class="fas fa-location-dot me-2 text-accent"></i><?= htmlspecialchars($item['lokasi']); ?></p>
+                    <div class="card wisata-card-modern h-100 d-flex flex-column">
+                            <div class="wisata-img-wrapper">
+                                <?php 
+                                $foto_path = "../image/uploads/informasi/" . $item['foto'];
+                                $foto_url = (!empty($item['foto']) && file_exists(__DIR__ . '/' . $foto_path)) ? $foto_path : '../image/default-berita.png';
+                                ?>
+                                <img src="<?= $foto_url; ?>" class="img-fluid" alt="<?= htmlspecialchars($item['judul']); ?>" style="height: 220px; width: 100%; object-fit: cover;">
+                                <span class="badge-tag <?= $item['jenis'] === 'Event' ? 'bg-warning text-dark' : 'bg-info text-white'; ?>">
+                                    <?= htmlspecialchars($item['jenis']); ?>
+                                </span>
+                            </div>
+                            <div class="wisata-info-body d-flex flex-column flex-grow-1">
+                                <h5 class="mb-2">
+                                    <a href="detail-berita/detail-berita.php?id=<?= $item['id']; ?>" class="wisata-title-link">
+                                        <?= htmlspecialchars($item['judul']); ?>
+                                    </a>
+                                </h5>
+                                <p class="desc text-muted mb-3">
+                                    <?= htmlspecialchars(substr($item['ringkasan'], 0, 100)); ?>...
+                                </p>
+                                
+                                <?php if($item['jenis'] === 'Event'): ?>
+                                    <div class="mb-3 p-2 bg-light rounded-3" style="font-size: 0.85rem;">
+                                        <p class="text-muted mb-1"><i class="fas fa-calendar-days me-2 text-accent"></i><?= htmlspecialchars($item['tanggal_event']); ?> (<?= htmlspecialchars($item['waktu_event']); ?>)</p>
+                                        <p class="text-muted mb-0"><i class="fas fa-location-dot me-2 text-accent"></i><?= htmlspecialchars($item['lokasi']); ?></p>
+                                    </div>
+                                <?php else: ?>
+                                    <!-- Placeholder agar tinggi sejajar dengan kartu Event -->
+                                    <div class="mb-3 p-2 rounded-3" style="font-size: 0.85rem; visibility: hidden;">
+                                        <p class="mb-1">-</p>
+                                        <p class="mb-0">-</p>
+                                    </div>
+                                <?php endif; ?>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top border-light">
+                                    <div class="d-flex flex-column gap-1">
+                                        <span class="text-muted small"><i class="far fa-clock me-1"></i> <?= date('d M Y', strtotime($item['created_at'])); ?></span>
+                                        <?php if(!empty($item['penulis'])): ?>
+                                        <span class="text-muted small"><i class="far fa-user me-1"></i> <?= htmlspecialchars($item['penulis']); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <a href="detail-berita/detail-berita.php?id=<?= $item['id']; ?>" class="btn btn-sm btn-primary-custom py-1 px-3" style="font-size: 0.85rem;">
+                                        Detail
+                                    </a>
                                 </div>
-                            <?php endif; ?>
-                            
-                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top border-light">
-                                <span class="text-muted small"><i class="far fa-clock me-1"></i> <?= date('d M Y', strtotime($item['created_at'])); ?></span>
-                                <a href="detail-berita/detail-berita.php?id=<?= $item['id']; ?>" class="btn btn-sm btn-primary-custom py-1 px-3" style="font-size: 0.85rem;">
-                                    Detail
-                                </a>
                             </div>
                         </div>
-                    </div>
                 </div>
             <?php endwhile; ?>
         <?php else: ?>

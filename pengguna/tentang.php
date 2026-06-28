@@ -55,10 +55,11 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="p-4">
-                        <img src="../image/Masjid_Lasusua_Kolaka_Utara.jpg"
+                        <!-- <img src="../image/Masjid_Lasusua_Kolaka_Utara.jpg"
                              class="img-fluid rounded-4 shadow-sm"
                              alt="Masjid Lasusua"
-                             style="width: 100%; height: 400px; object-fit: cover;">
+                             style="width: 100%; height: 400px; object-fit: cover;"> -->
+                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d840488.0735568989!2d120.50106150252655!3d-3.261524976841307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d9733ebf15cf45f%3A0x3030bfbcaf771a0!2sKabupaten%20Kolaka%20Utara%2C%20Sulawesi%20Tenggara!5e1!3m2!1sid!2sid!4v1782631899706!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                     </div>
                 </div>
             </div>
@@ -71,7 +72,7 @@
     <div class="container">
         <div class="text-center mb-5">
             <h2 class="fw-bold text-primary-color display-5">Kepemimpinan Daerah</h2>
-            <p class="text-muted">Bupati dan Wakil Bupati Kabupaten Kolaka Utara</p>
+            <p class="text-muted">Bupati dan Wakil Bupati Kabupaten Kolaka Utara 2026</p>
             <div class="garis-aesthetic mx-auto"></div>
         </div>
 
@@ -80,14 +81,14 @@
             <div class="col-md-5 text-center">
                 <div class="bupati-card">
                     <div class="bupati-img-frame">
-                        <img src="../image/bupati.png" alt="Bupati Kolaka Utara">
+                        <img src="https://kolutkab.go.id/wp-content/uploads/Bupati-Kolaka-Utara-Periode-2017-2022-0-Nur-Rahman-Umar-750.webp" alt="Bupati Kolaka Utara">
                     </div>
                     <h4 class="fw-bold text-primary-color mb-1">
-                        Yusmin, S.Pd., M.H.
+                        Drs. H. Nur Rahman Umar, MH
                     </h4>
-                    <p class="text-accent fw-semibold mb-2">Pj. Bupati Kolaka Utara</p>
+                    <p class="text-accent fw-semibold mb-2">Bupati Kolaka Utara</p>
                     <p class="text-muted small px-3">
-                        Memimpin koordinasi pemerintahan dan mendorong percepatan pembangunan serta pariwisata daerah di Kolaka Utara.
+                        Memimpin koordinasi pemerintahan dan mendorong percepatan pembangunan di Kolaka Utara.
                     </p>
                 </div>
             </div>
@@ -96,10 +97,10 @@
             <div class="col-md-5 text-center">
                 <div class="bupati-card">
                     <div class="bupati-img-frame">
-                        <img src="../image/wakil-bupati.png" alt="Wakil Bupati Kolaka Utara">
+                        <img src="https://kolutkab.go.id/wp-content/uploads/2025/04/Wakil-Bupati-Kolaka-Utara-Periode-2025-2030-Jumarding.webp" alt="Wakil Bupati Kolaka Utara">
                     </div>
                     <h4 class="fw-bold text-primary-color mb-1">
-                        H. Abbas, S.E.
+                        H. Jumarding, S.E
                     </h4>
                     <p class="text-accent fw-semibold mb-2">Wakil Bupati Kolaka Utara</p>
                     <p class="text-muted small px-3">

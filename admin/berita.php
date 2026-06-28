@@ -187,8 +187,8 @@ $queryEvent = mysqli_query($conn, "SELECT * FROM informasi WHERE (judul LIKE '%$
                 <div class="row mb-4">
                     <div class="col-lg-5">
                         <div class="input-group">
-                            <input type="text" name="keyword" class="form-control" placeholder="Cari judul atau lokasi..." value="<?= htmlspecialchars($keyword) ?>">
-                            <button class="btn btn-dark">Cari</button>
+                            <input type="text" name="keyword" class="form-control" placeholder="Search..." value="<?= htmlspecialchars($keyword) ?>">
+                            <button class="btn btn-cari"><i class="fas fa-search me-1"></i>Cari</button>
                         </div>
                     </div>
                 </div>

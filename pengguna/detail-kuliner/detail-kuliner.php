@@ -59,7 +59,9 @@ function formatHarga($harga) {
 
     <!-- Judul & Deskripsi -->
     <div class="text-center mb-5">
-        <span class="badge bg-category px-3 py-2 mb-2">KULINER KHAS</span>
+        <span class="badge bg-category text-dark px-3 py-2 mb-2">
+             KULINER KHAS
+        </span>
         <h1 class="display-4 fw-bold text-primary-color mb-3">
             <?= htmlspecialchars($item['nama']); ?>
         </h1>

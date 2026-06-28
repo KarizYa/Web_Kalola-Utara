@@ -92,7 +92,9 @@ $reviews = mysqli_query($conn, "SELECT * FROM ulasan WHERE wisata_id='$id' ORDER
 
     <!-- Judul & Deskripsi Singkat -->
     <div class="text-center mb-5">
-        <span class="badge bg-category px-3 py-2 mb-2"><?= htmlspecialchars($data['jenis_wisata']); ?></span>
+        <span class="badge bg-category text-dark px-3 py-2 mb-2">
+            <?= htmlspecialchars($data['jenis_wisata']); ?>
+        </span>
         <h1 class="display-4 fw-bold text-primary-color mb-3">
             <?= htmlspecialchars($data['nama']); ?>
         </h1>

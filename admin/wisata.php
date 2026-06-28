@@ -298,12 +298,7 @@ class="form-control"
 placeholder="Search..."
 value="<?= $keyword ?>">
 
-<button
-class="btn btn-dark">
-
-Cari
-
-</button>
+<button class="btn btn-cari"><i class="fas fa-search me-1"></i>Cari</button>
 
 </div>
 

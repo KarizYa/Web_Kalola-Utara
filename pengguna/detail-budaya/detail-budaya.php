@@ -57,7 +57,9 @@ $gallery = mysqli_query($conn, "SELECT * FROM budaya_galeri WHERE budaya_id='$id
 
     <!-- Judul & Deskripsi -->
     <div class="text-center mb-5">
-        <span class="badge bg-category px-3 py-2 mb-2">WARISAN SEJARAH</span>
+        <span class="badge bg-category text-dark px-3 py-2 mb-2">
+             WARISAN SEJARAH
+        </span>
         <h1 class="display-4 fw-bold text-primary-color mb-3">
             <?= htmlspecialchars($data['nama']); ?>
         </h1>

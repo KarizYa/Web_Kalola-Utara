@@ -83,7 +83,7 @@ $wisataList = mysqli_query($conn, "SELECT id, nama FROM wisata ORDER BY nama ASC
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-dark">Terapkan</button>
+                            <button class="btn btn-cari">Terapkan</button>
                         </div>
                         <div class="col-md-3 text-end">
                             <small class="text-muted">Total: <?= $total ?> ulasan</small>

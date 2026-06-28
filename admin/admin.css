@@ -735,6 +735,31 @@ body {
     box-shadow: 0 4px 12px rgba(16,185,129,.3);
 }
 
+/* Button Cari — Gold Accent */
+.btn-cari {
+    background: linear-gradient(135deg, var(--accent-gold), #e8b470);
+    color: var(--primary-emerald) !important;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 18px;
+    font-size: .875rem;
+    font-weight: 700;
+    font-family: var(--font);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(217, 160, 91, 0.3);
+}
+
+.btn-cari:hover {
+    background: linear-gradient(135deg, var(--accent-gold-hover), var(--accent-gold));
+    color: var(--primary-emerald) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(217, 160, 91, 0.45);
+}
+
 /* ============================================================
    FORM ADMIN
    ============================================================ */

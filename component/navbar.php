@@ -59,11 +59,36 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
 
-        <li class="nav-item">
-           <a class="nav-link <?= ($currentPage == 'informasi.php' || $currentPage == 'berita.php' || strpos($_SERVER['PHP_SELF'], 'detail-berita') !== false) ? 'active fw-bold' : ''; ?>"
-             href="/project-bootstrap/pengguna/informasi.php">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle <?= ($currentPage == 'informasi.php' || $currentPage == 'berita.php' || $currentPage == 'event.php' || strpos($_SERVER['PHP_SELF'], 'detail-berita') !== false) ? 'active fw-bold' : ''; ?>"
+             href="/project-bootstrap/pengguna/informasi.php"
+             id="navDropdownInformasi"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
             Informasi
           </a>
+          <ul class="dropdown-menu navbar-dropdown-menu" aria-labelledby="navDropdownInformasi">
+            <li>
+              <a class="dropdown-item navbar-dropdown-item <?= $currentPage == 'berita.php' ? 'active' : ''; ?>"
+                 href="/project-bootstrap/pengguna/berita.php">
+                <i class="fas fa-newspaper me-2"></i>Berita
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item navbar-dropdown-item <?= $currentPage == 'event.php' ? 'active' : ''; ?>"
+                 href="/project-bootstrap/pengguna/event.php">
+                <i class="fas fa-calendar-check me-2"></i>Event
+              </a>
+            </li>
+            <li><hr class="dropdown-divider my-1" style="border-color: rgba(255,255,255,0.1);"></li>
+            <li>
+              <a class="dropdown-item navbar-dropdown-item <?= $currentPage == 'informasi.php' ? 'active' : ''; ?>"
+                 href="/project-bootstrap/pengguna/informasi.php">
+                <i class="fas fa-circle-info me-2"></i>Tentang Informasi
+              </a>
+            </li>
+          </ul>
         </li>
 
         <li class="nav-item">

@@ -64,8 +64,11 @@ if(!$selected){
                 <h1 class="fw-bold text-primary-color font-serif mb-3" style="font-size: 2.5rem; line-height: 1.3;">
                     <?= htmlspecialchars($selected['judul']); ?>
                 </h1>
-                <div class="d-flex align-items-center gap-3 text-muted small pb-3 border-bottom">
+                <div class="d-flex align-items-center gap-3 text-muted small pb-3 border-bottom flex-wrap">
                     <span><i class="far fa-calendar me-1 text-accent"></i> Diterbitkan: <?= date('d M Y', strtotime($selected['created_at'])); ?></span>
+                    <?php if(!empty($selected['penulis'])): ?>
+                    <span><i class="far fa-user me-1 text-accent"></i> Penulis: <?= htmlspecialchars($selected['penulis']); ?></span>
+                    <?php endif; ?>
                 </div>
             </div>
 
