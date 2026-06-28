@@ -44,22 +44,22 @@ $wisataList = mysqli_query($conn, "SELECT id, nama FROM wisata ORDER BY nama ASC
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Ulasan</title>
+    <title>Kelola Ulasan — Admin Pesona Kolaka Utara</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="admin.css?v=2">
 </head>
 <body>
 <?php include '../component/navbar-admin.php'; ?>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3 p-0">
-            <?php include '../component/sidebar-admin.php'; ?>
+<div class="admin-wrapper">
+    <?php include '../component/sidebar-admin.php'; ?>
+    <main class="admin-main">
+    <div class="admin-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold" style="font-family: var(--font);">
+                <i class="fas fa-star" style="color: var(--accent);"></i> Kelola Ulasan
+            </h2>
         </div>
-        <div class="col-lg-9 admin-content">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold"><i class="fa-regular fa-comment-dots"></i> Kelola Ulasan</h2>
-            </div>
 
             <div class="card shadow-sm border-0 mb-3">
                 <div class="card-body">
@@ -94,7 +94,7 @@ $wisataList = mysqli_query($conn, "SELECT id, nama FROM wisata ORDER BY nama ASC
 
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <table class="table table-striped align-middle">
+                    <table class="table align-middle">
                         <thead class="table-dark">
                             <tr>
                                 <th width="60">No</th>
@@ -171,26 +171,45 @@ $wisataList = mysqli_query($conn, "SELECT id, nama FROM wisata ORDER BY nama ASC
                         </tbody>
                     </table>
 
-                    <?php if($totalPages > 1): ?>
-                        <nav>
-                            <ul class="pagination">
-                                <?php if($page > 1): ?>
-                                    <li class="page-item"><a class="page-link" href="?wisata_id=<?= $wisata_filter ?>&rating=<?= $rating_filter ?>&page=<?= $page-1 ?>">&laquo; Prev</a></li>
-                                <?php endif; ?>
-                                <?php for($p=1;$p<=$totalPages;$p++): ?>
-                                    <li class="page-item <?= $p== $page? 'active' : '' ?>"><a class="page-link" href="?wisata_id=<?= $wisata_filter ?>&rating=<?= $rating_filter ?>&page=<?= $p ?>"><?= $p ?></a></li>
-                                <?php endfor; ?>
-                                <?php if($page < $totalPages): ?>
-                                    <li class="page-item"><a class="page-link" href="?wisata_id=<?= $wisata_filter ?>&rating=<?= $rating_filter ?>&page=<?= $page+1 ?>">Next &raquo;</a></li>
-                                <?php endif; ?>
-                            </ul>
-                        </nav>
+                    <?php if($totalPages >= 1): ?>
+                        <div class="pagination-wrapper">
+                            <span class="pagination-info">
+                                <?php $from = $total > 0 ? $offset + 1 : 0; $to = min($offset + $perPage, $total); ?>
+                                Menampilkan <strong><?= $from ?>–<?= $to ?></strong> dari <strong><?= $total ?></strong> ulasan
+                            </span>
+                            <nav>
+                                <ul class="pagination">
+                                    <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?wisata_id=<?= $wisata_filter ?>&rating=<?= $rating_filter ?>&page=<?= $page-1 ?>" <?= $page <= 1 ? 'tabindex="-1"' : '' ?>>
+                                            <i class="fas fa-chevron-left me-1"></i> Prev
+                                        </a>
+                                    </li>
+                                    <?php
+                                    $range = 2;
+                                    for($p=1;$p<=$totalPages;$p++):
+                                        if($p == 1 || $p == $totalPages || ($p >= $page - $range && $p <= $page + $range)):
+                                    ?>
+                                    <li class="page-item <?= $p == $page ? 'active' : '' ?>">
+                                        <a class="page-link" href="?wisata_id=<?= $wisata_filter ?>&rating=<?= $rating_filter ?>&page=<?= $p ?>"><?= $p ?></a>
+                                    </li>
+                                    <?php elseif($p == $page - $range - 1 || $p == $page + $range + 1): ?>
+                                    <li class="page-item dots"><a class="page-link">…</a></li>
+                                    <?php endif; endfor; ?>
+                                    <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?wisata_id=<?= $wisata_filter ?>&rating=<?= $rating_filter ?>&page=<?= $page+1 ?>" <?= $page >= $totalPages ? 'tabindex="-1"' : '' ?>>
+                                            Next <i class="fas fa-chevron-right ms-1"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
-        </div>
     </div>
-</div>
+    </div><!-- .admin-content -->
+    </main><!-- .admin-main -->
+</div><!-- .admin-wrapper -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

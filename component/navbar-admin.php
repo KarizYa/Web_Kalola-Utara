@@ -1,29 +1,25 @@
-<nav class="navbar navbar-dark bg-black shadow-sm">
-    <div class="container-fluid">
+<?php
+// Navbar Admin Component
+?>
+<nav class="admin-navbar">
 
-        <div class="d-flex align-items-center">
-
-            <img src="../image/logo.png"
-                 alt="Logo"
-                 width="40"
-                 height="40"
-                 class="me-2">
-
-            <div class="text-white">
-                <div class="fw-bold">PESONA</div>
-                <small>KOLAKA UTARA</small>
-            </div>
-
+    <!-- Brand -->
+    <a href="/project-bootstrap/admin/dashboard.php" class="admin-navbar-brand">
+        <div class="admin-navbar-logo">
+            <i class="fas fa-compass"></i>
         </div>
-
-        <div class="d-flex align-items-center">
-
-            <a href="../pengguna/beranda.php"  target="_blank"
-               class="btn btn-light fw-semibold">
-                Lihat Website
-            </a>
-
+        <div class="admin-navbar-text">
+            <span class="brand-title">PESONA</span>
+            <span class="brand-sub">KOLAKA UTARA</span>
         </div>
+    </a>
 
+    <!-- Actions -->
+    <div class="admin-navbar-actions">
+        <a href="/project-bootstrap/pengguna/beranda.php" target="_blank" class="btn-lihat-website">
+            <i class="fas fa-external-link-alt"></i>
+            Lihat Website
+        </a>
     </div>
+
 </nav>

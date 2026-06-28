@@ -122,27 +122,27 @@ $queryKuliner = mysqli_query($conn, "SELECT * FROM kuliner WHERE nama LIKE '%$ke
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kelola Kuliner</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<link rel="stylesheet" href="admin.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Kuliner — Admin Pesona Kolaka Utara</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="admin.css?v=2">
 </head>
 <body>
 <?php include '../component/navbar-admin.php'; ?>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3 p-0">
-            <?php include '../component/sidebar-admin.php'; ?>
+<div class="admin-wrapper">
+    <?php include '../component/sidebar-admin.php'; ?>
+    <main class="admin-main">
+    <div class="admin-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold" style="font-family: var(--font);">
+                <i class="fas fa-utensils" style="color: var(--accent);"></i> Kelola Kuliner
+            </h2>
+            <button class="btn-admin" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                <i class="fas fa-plus"></i> Tambah Kuliner
+            </button>
         </div>
-        <div class="col-lg-9 admin-content">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold"><i class="fa-solid fa-utensils"></i> Kelola Kuliner</h2>
-                <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                    <i class="fa-solid fa-plus"></i> Tambah Kuliner
-                </button>
-            </div>
 
             <form method="GET">
                 <div class="row mb-4">
@@ -296,28 +296,45 @@ $queryKuliner = mysqli_query($conn, "SELECT * FROM kuliner WHERE nama LIKE '%$ke
                         </tbody>
                     </table>
 
-                    <?php if($totalPages > 1): ?>
-                    <div class="mt-3">
+                    <?php if($totalPages >= 1): ?>
+                    <div class="pagination-wrapper">
+                        <span class="pagination-info">
+                            <?php $from = $total > 0 ? $offset + 1 : 0; $to = min($offset + $perPage, $total); ?>
+                            Menampilkan <strong><?= $from ?>–<?= $to ?></strong> dari <strong><?= $total ?></strong> data
+                        </span>
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
-                                <?php if($page > 1): ?>
-                                    <li class="page-item"><a class="page-link" href="kuliner.php?keyword=<?= urlencode($keyword) ?>&page=<?= $page - 1 ?>">&laquo; Prev</a></li>
-                                <?php endif; ?>
-                                <?php for($i = 1; $i <= $totalPages; $i++): ?>
-                                    <li class="page-item <?= $i === $page ? 'active' : '' ?>"><a class="page-link" href="kuliner.php?keyword=<?= urlencode($keyword) ?>&page=<?= $i ?>"><?= $i ?></a></li>
-                                <?php endfor; ?>
-                                <?php if($page < $totalPages): ?>
-                                    <li class="page-item"><a class="page-link" href="kuliner.php?keyword=<?= urlencode($keyword) ?>&page=<?= $page + 1 ?>">Next &raquo;</a></li>
-                                <?php endif; ?>
+                                <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="kuliner.php?keyword=<?= urlencode($keyword) ?>&page=<?= $page - 1 ?>" <?= $page <= 1 ? 'tabindex="-1"' : '' ?>>
+                                        <i class="fas fa-chevron-left me-1"></i> Prev
+                                    </a>
+                                </li>
+                                <?php
+                                $range = 2;
+                                for($i = 1; $i <= $totalPages; $i++):
+                                    if($i == 1 || $i == $totalPages || ($i >= $page - $range && $i <= $page + $range)):
+                                ?>
+                                <li class="page-item <?= $i === $page ? 'active' : '' ?>">
+                                    <a class="page-link" href="kuliner.php?keyword=<?= urlencode($keyword) ?>&page=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                                <?php elseif($i == $page - $range - 1 || $i == $page + $range + 1): ?>
+                                <li class="page-item dots"><a class="page-link">…</a></li>
+                                <?php endif; endfor; ?>
+                                <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="kuliner.php?keyword=<?= urlencode($keyword) ?>&page=<?= $page + 1 ?>" <?= $page >= $totalPages ? 'tabindex="-1"' : '' ?>>
+                                        Next <i class="fas fa-chevron-right ms-1"></i>
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
                     <?php endif; ?>
                 </div>
             </div>
-        </div>
     </div>
-</div>
+    </div><!-- .admin-content -->
+    </main><!-- .admin-main -->
+</div><!-- .admin-wrapper -->
 
 <div class="modal fade" id="modalTambah">
     <div class="modal-dialog modal-lg">

@@ -20,130 +20,152 @@ $totalKuliner = $row ? (int)$row['total'] : 0;
 $row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM ulasan"));
 $totalUlasan = $row ? (int)$row['total'] : 0;
 
-// Ambil ulasan terbaru (join ke wisata untuk menampilkan nama tempat jika tersedia)
+// Ambil ulasan terbaru
 $ulasanTerbaru = [];
-$q = "SELECT u.nama, COALESCE(w.nama, '-') AS tempat, u.komentar AS ulasan, u.rating, DATE_FORMAT(u.created_at, '%d/%m/%Y') AS tanggal
+$q = "SELECT u.nama, COALESCE(w.nama, '-') AS tempat, u.komentar AS ulasan, u.rating,
+             DATE_FORMAT(u.created_at, '%d/%m/%Y') AS tanggal
       FROM ulasan u
       LEFT JOIN wisata w ON u.wisata_id = w.id
-    ORDER BY u.created_at DESC
-    LIMIT 1";
+      ORDER BY u.created_at DESC
+      LIMIT 2";
 $res = mysqli_query($conn, $q);
-if($res){
-    while($r = mysqli_fetch_assoc($res)){
+if ($res) {
+    while ($r = mysqli_fetch_assoc($res)) {
         $ulasanTerbaru[] = $r;
     }
 }
-
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
+    <title>Dashboard Admin — Pesona Kolaka Utara</title>
 
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <link rel="stylesheet" href="admin.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="admin.css?v=2">
 </head>
 <body>
+
+    <!-- Navbar -->
     <?php include '../component/navbar-admin.php'; ?>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-lg-3 col-xl-3 p-0">
-                <?php include '../component/sidebar-admin.php'; ?>
-            </div>
-            <!-- Content -->
-            <div class="col-lg-9 col-xl-9 admin-content">
-                <!-- Header -->
-                <div class="content-header">
-                    <h2 class="fw-bold">
-                        <i class="fa-solid fa-chart-column me-2"></i>
-                        Dashboard Admin
+    <!-- Wrapper -->
+    <div class="admin-wrapper">
+
+        <!-- Sidebar -->
+        <?php include '../component/sidebar-admin.php'; ?>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-content">
+
+                <!-- Page Header -->
+                <div class="content-header mb-4">
+                    <h2>
+                        <i class="fas fa-chart-line"></i>
+                        Dashboard
                     </h2>
+                    <p class="page-title-sub">Selamat datang kembali, Administrator!</p>
                 </div>
 
-                <!-- Statistik -->
+                <!-- Stat Cards -->
                 <div class="row g-4 mb-4">
-                    <!-- Wisata -->
-                    <div class="col-md-6">
-                        <div class="dashboard-card">
-                            <i class="fa-regular fa-image dashboard-icon"></i>
-                            <h3><?= $totalWisata ?></h3>
-                            <p>Total Wisata</p>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-mountain-sun"></i>
+                            </div>
+                            <div class="stat-number"><?= $totalWisata ?></div>
+                            <div class="stat-label">Total Wisata</div>
                         </div>
                     </div>
-                    <!-- Budaya -->
-                    <div class="col-md-6">
-                        <div class="dashboard-card">
-                            <i class="fa-solid fa-book-open dashboard-icon"></i>
-                            <h3><?= $totalBudaya ?></h3>
-                            <p>Data Budaya</p>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card blue">
+                            <div class="stat-icon">
+                                <i class="fas fa-masks-theater"></i>
+                            </div>
+                            <div class="stat-number"><?= $totalBudaya ?></div>
+                            <div class="stat-label">Data Budaya</div>
                         </div>
                     </div>
-                    <!-- Kuliner -->
-                    <div class="col-md-6">
-                        <div class="dashboard-card">
-                            <i class="fa-solid fa-utensils dashboard-icon"></i>
-                            <h3><?= $totalKuliner ?></h3>
-                            <p>Item Kuliner</p>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card amber">
+                            <div class="stat-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="stat-number"><?= $totalKuliner ?></div>
+                            <div class="stat-label">Item Kuliner</div>
                         </div>
                     </div>
-                    <!-- Ulasan -->
-                    <div class="col-md-6">
-                        <div class="dashboard-card">
-                            <i class="fa-regular fa-comment-dots dashboard-icon"></i>
-                            <h3><?= $totalUlasan ?></h3>
-                            <p>Ulasan Baru</p>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="stat-card violet">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-number"><?= $totalUlasan ?></div>
+                            <div class="stat-label">Total Ulasan</div>
                         </div>
                     </div>
+
                 </div>
+
                 <!-- Ulasan Terbaru -->
                 <div class="review-section">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2 class="fw-bold mb-0">
+                    <div class="review-header">
+                        <h2>
+                            <i class="fas fa-comment-dots me-2" style="color: var(--accent);"></i>
                             Ulasan Pengunjung Terbaru
                         </h2>
                         <a href="ulasan.php" class="lihat-semua">
-                            Lihat Semua >
+                            Lihat Semua <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
-                    <?php foreach($ulasanTerbaru as $ulasan): ?>
-                        <div class="review-item">
-                            <div class="d-flex justify-content-between align-items-start flex-wrap">
-                                <div>
-                                    <h4 class="fw-bold mb-1">
-                                        <?= $ulasan['nama']; ?>
-                                    </h4>
-                                    <h5 class="mb-0">
-                                        <?= $ulasan['tempat']; ?>
-                                    </h5>
+
+                    <div class="review-body">
+                        <?php if (empty($ulasanTerbaru)): ?>
+                            <p class="text-muted py-4 text-center">Belum ada ulasan.</p>
+                        <?php else: ?>
+                            <?php foreach ($ulasanTerbaru as $ulasan): ?>
+                                <div class="review-item">
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                                        <div>
+                                            <div class="review-reviewer"><?= htmlspecialchars($ulasan['nama']) ?></div>
+                                            <div class="review-place">
+                                                <i class="fas fa-location-dot me-1"></i>
+                                                <?= htmlspecialchars($ulasan['tempat']) ?>
+                                            </div>
+                                        </div>
+                                        <div class="review-date">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            <?= $ulasan['tanggal'] ?>
+                                        </div>
+                                    </div>
+                                    <p class="review-text">"<?= htmlspecialchars($ulasan['ulasan']) ?>"</p>
+                                    <div class="rating">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <i class="fa-<?= $i <= $ulasan['rating'] ? 'solid' : 'regular' ?> fa-star"></i>
+                                        <?php endfor; ?>
+                                    </div>
                                 </div>
-                                <strong>
-                                    <?= $ulasan['tanggal']; ?>
-                                </strong>
-                            </div>
-                            <p class="review-text mt-3">
-                                "<?= $ulasan['ulasan']; ?>"
-                            </p>
-                            <div class="rating">
-                                <?php for($i = 1; $i <= $ulasan['rating']; $i++): ?>
-                                    <i class="fa-solid fa-star"></i>
-                                <?php endfor; ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
+
             </div>
-        </div>
-    </div>
+        </main>
+
+    </div><!-- .admin-wrapper -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

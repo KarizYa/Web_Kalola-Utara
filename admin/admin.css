@@ -1,535 +1,991 @@
-/* ==================================
-   GLOBAL
-================================== */
+/* ============================================================
+   PESONA KOLAKA UTARA — ADMIN PANEL CSS
+   Modern Dark Sidebar Design
+   ============================================================ */
 
-body{
-    background-color: #f5f5f5;
-    font-family: Arial, Helvetica, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+/* ============================================================
+   CSS VARIABLES
+   ============================================================ */
+
+:root {
+    /* Emerald & Gold Palette from Pengguna */
+    --primary-emerald:  #0b2b26;      /* Deep Jungle Green */
+    --secondary-emerald:#1d5c53;      /* Medium Forest Teal */
+    --accent-gold:      #d9a05b;      /* Warm Amber Gold */
+    --accent-gold-hover:#c58d4a;      /* Darker Gold */
+    
+    --sidebar-bg:       var(--primary-emerald);
+    --sidebar-surface:  #10352f;      /* Lighter Deep Green for user block */
+    --sidebar-hover:    #16463e;      /* Hover state in sidebar */
+    --sidebar-active:   var(--accent-gold);
+    --sidebar-text:     #a1b0ad;      /* Grayish green for text */
+    --sidebar-text-active: #ffffff;
+    --sidebar-width:    260px;
+
+    --navbar-bg:        var(--primary-emerald);
+    --navbar-height:    76px;         /* Increased navbar height */
+
+    --body-bg:          #f4f7f6;      /* Soft Sage Gray */
+    --card-bg:          #ffffff;
+    --card-shadow:      0 4px 20px rgba(11, 43, 38, 0.05); /* Sage/Emerald tinted shadow */
+    --card-radius:      16px;
+
+    --accent:           var(--accent-gold);
+    --accent-hover:     var(--accent-gold-hover);
+    --accent-light:     rgba(217, 160, 91, 0.12); /* Gold Light */
+
+    --danger:           #ef4444;
+    --danger-hover:     #dc2626;
+    --warning:          #f59e0b;
+    --warning-hover:    #d97706;
+    --info:             #3b82f6;
+
+    --text-primary:     #1e293b;      /* Slate Charcoal */
+    --text-secondary:   #475569;
+    --text-muted:       #64748b;      /* Slate Muted Gray */
+    --border-color:     #e2e8f0;
+
+    --font:             'Plus Jakarta Sans', sans-serif;
+    --transition:       0.25s cubic-bezier(.4,0,.2,1);
+}
+
+/* ============================================================
+   GLOBAL RESET
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: var(--font);
+    background: var(--body-bg);
+    color: var(--text-primary);
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
-/* ==================================
-   NAVBAR ADMIN
-================================== */
+/* ============================================================
+   LAYOUT SHELL  (navbar fixed-top + sidebar fixed-left)
+   ============================================================ */
 
-.navbar{
-    min-height: 70px;
-}
-
-.navbar-brand{
-    text-decoration: none;
-}
-
-.navbar-brand small{
-    display: block;
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
-.navbar .btn{
-    border-radius: 8px;
-}
-
-/* ==================================
-   SIDEBAR ADMIN
-================================== */
-
-.admin-sidebar{
-    background: #2f2f2f;
-    min-height: calc(100vh - 70px);
-    height: 100%;
-
+.admin-wrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    padding: 20px;
+    min-height: 100vh;
+    padding-top: var(--navbar-height); /* push below fixed navbar */
 }
 
-.admin-user{
+/* ============================================================
+   TOP NAVBAR
+   ============================================================ */
+
+.admin-navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--navbar-height);
+    background: var(--navbar-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 1050;
+    box-shadow: 0 1px 0 rgba(255,255,255,.06);
+}
+
+.admin-navbar-brand {
     display: flex;
     align-items: center;
     gap: 12px;
-
-    color: white;
-
-    font-size: 1.6rem;
-    font-weight: 700;
-
-    margin-bottom: 30px;
+    text-decoration: none;
 }
 
-.admin-user i{
-    font-size: 2rem;
-}
-
-.sidebar-menu{
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar-link{
+.admin-navbar-logo {
+    width: 44px;
+    height: 44px;
+    background: var(--accent);
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    gap: 15px;
-
-    text-decoration: none;
-    color: white;
-
-    padding: 14px 16px;
-    margin-bottom: 10px;
-
-    border-radius: 10px;
-
-    font-size: 1.05rem;
-    font-weight: 600;
-
-    transition: 0.3s;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #fff;
+    flex-shrink: 0;
 }
 
-.sidebar-link:hover{
-    background: #000;
-    color: white;
-}
-
-.sidebar-link.active{
-    background: #000;
-    color: white;
-}
-
-.sidebar-link i{
-    width: 25px;
-    text-align: center;
-}
-
-/* ==================================
-   FOOTER SIDEBAR
-================================== */
-
-.sidebar-footer{
-    margin-top: 30px;
-}
-
-.admin-profile{
-    background: white;
-    color: black;
-
-    border-radius: 20px;
-
-    padding: 15px;
-
-    text-align: center;
-
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-.logout-btn{
+.admin-navbar-text .brand-title {
     display: block;
-
-    text-align: center;
-
-    text-decoration: none;
-
-    color: white;
-
-    margin-top: 20px;
-
-    font-size: 1rem;
-    font-weight: 600;
-
-    transition: 0.3s;
-}
-
-.logout-btn:hover{
-    color: #ddd;
-}
-
-/* ==================================
-   CONTENT
-================================== */
-
-.admin-content{
-    padding: 30px;
-}
-
-.content-header{
-    margin-bottom: 25px;
-}
-
-.content-header h2{
-    font-size: 2rem;
-}
-
-/* ==================================
-   DASHBOARD CARD
-================================== */
-
-.dashboard-card{
-    background: #d9d9d9;
-
-    border-radius: 15px;
-
-    padding: 25px;
-
-    min-height: 180px;
-
-    transition: 0.3s;
-}
-
-.dashboard-card:hover{
-    transform: translateY(-5px);
-}
-
-.dashboard-icon{
-    font-size: 2.2rem;
-    margin-bottom: 30px;
-}
-
-.dashboard-card h3{
-    font-size: 2rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    margin-bottom: 5px;
+    color: #fff;
+    line-height: 1.2;
+    letter-spacing: .5px;
 }
 
-.dashboard-card p{
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 500;
+.admin-navbar-text .brand-sub {
+    display: block;
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--sidebar-text);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
-/* ==================================
-   REVIEW SECTION
-================================== */
-
-.review-section{
-    background: #d9d9d9;
-
-    border-radius: 15px;
-
-    padding: 25px;
+.admin-navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.lihat-semua{
+.btn-lihat-website {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: var(--accent);
+    color: #fff !important;
+    border: none;
+    border-radius: 10px;
+    font-size: .85rem;
+    font-weight: 600;
     text-decoration: none;
-    color: black;
+    transition: var(--transition);
+}
 
+.btn-lihat-website:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16,185,129,.35);
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+
+.admin-sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    min-height: calc(100vh - var(--navbar-height));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 16px;
+    flex-shrink: 0;
+    position: sticky;
+    top: var(--navbar-height);
+    height: calc(100vh - var(--navbar-height));
+    overflow-y: auto;
+}
+
+.admin-sidebar::-webkit-scrollbar { width: 4px; }
+.admin-sidebar::-webkit-scrollbar-track { background: transparent; }
+.admin-sidebar::-webkit-scrollbar-thumb { background: var(--sidebar-hover); border-radius: 4px; }
+
+/* Sidebar — admin user block */
+.admin-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--sidebar-surface);
+    border-radius: 12px;
+    margin-bottom: 28px;
+}
+
+.admin-avatar {
+    width: 42px;
+    height: 42px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.admin-user-info .admin-name {
+    display: block;
+    font-size: .9rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+}
+
+.admin-user-info .admin-role {
+    display: block;
+    font-size: .72rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-top: 2px;
+}
+
+/* Sidebar — menu label */
+.sidebar-label {
+    font-size: .65rem;
+    font-weight: 700;
+    color: var(--sidebar-text);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0 14px;
+    margin-bottom: 8px;
+    margin-top: 4px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--sidebar-text);
+    font-size: .875rem;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+}
+
+.sidebar-link .sidebar-icon {
+    width: 20px;
+    text-align: center;
+    font-size: .95rem;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.sidebar-link:hover {
+    background: var(--sidebar-hover);
+    color: #fff;
+}
+
+.sidebar-link:hover .sidebar-icon {
+    color: var(--accent);
+}
+
+.sidebar-link.active {
+    background: var(--accent-light);
+    color: #fff;
     font-weight: 600;
 }
 
-.lihat-semua:hover{
-    color: black;
+.sidebar-link.active .sidebar-icon {
+    color: var(--accent);
 }
 
-.review-item{
-    border-top: 1px solid rgba(0,0,0,0.15);
+.sidebar-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--accent);
+    border-radius: 0 3px 3px 0;
+}
+
+/* Sidebar — footer / logout */
+.sidebar-footer {
+    border-top: 1px solid var(--sidebar-hover);
     padding-top: 20px;
 }
 
-.review-item:first-of-type{
-    border-top: none;
-    padding-top: 0;
-}
-
-.review-text{
-    margin-top: 15px;
-    margin-bottom: 10px;
-
-    font-size: 1rem;
-    line-height: 1.7;
-}
-
-.rating i{
-    color: #000;
-    margin-right: 3px;
-}
-
-/* ==================================
-   TABEL ADMIN
-   (Untuk halaman wisata,
-   budaya, kuliner, event, dll)
-================================== */
-
-.admin-table-card{
-    background: #fff;
-    border-radius: 15px;
-    padding: 25px;
-}
-
-.table thead{
-    background: #212529;
-    color: white;
-}
-
-.table th,
-.table td{
-    vertical-align: middle;
-}
-
-.table img{
+.sidebar-logout {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
     border-radius: 10px;
+    text-decoration: none;
+    color: var(--sidebar-text);
+    font-size: .875rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.sidebar-logout:hover {
+    background: rgba(239,68,68,.15);
+    color: #fca5a5;
+}
+
+/* ============================================================
+   MAIN CONTENT AREA
+   ============================================================ */
+
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 32px;
+}
+
+/* ============================================================
+   PAGE HEADER
+   ============================================================ */
+
+.page-header {
+    margin-bottom: 28px;
+}
+
+.page-header h2,
+.content-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-header h2 i,
+.content-header h2 i {
+    color: var(--accent);
+}
+
+.page-title-sub {
+    font-size: .875rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* ============================================================
+   DASHBOARD STAT CARDS
+   ============================================================ */
+
+.stat-card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    padding: 24px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent));
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,.12);
+}
+
+.stat-card.blue   { --card-accent: #3b82f6; }
+.stat-card.amber  { --card-accent: #f59e0b; }
+.stat-card.violet { --card-accent: #8b5cf6; }
+.stat-card.rose   { --card-accent: #f43f5e; }
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--accent-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin-bottom: 18px;
+}
+
+.stat-card.blue   .stat-icon { background: rgba(59,130,246,.12);  color: #3b82f6; }
+.stat-card.amber  .stat-icon { background: rgba(245,158,11,.12);  color: #f59e0b; }
+.stat-card.violet .stat-icon { background: rgba(139,92,246,.12);  color: #8b5cf6; }
+.stat-card.rose   .stat-icon { background: rgba(244,63,94,.12);   color: #f43f5e; }
+
+.stat-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.stat-label {
+    font-size: .85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ============================================================
+   SECTION CARDS  (review, tables, forms)
+   ============================================================ */
+
+.admin-card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.admin-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.admin-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-card-title i { color: var(--accent); }
+
+.admin-card-body { padding: 24px; }
+
+/* ============================================================
+   REVIEW / ULASAN SECTION  (dashboard)
+   ============================================================ */
+
+.review-section {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.review-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-header h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.lihat-semua {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: var(--transition);
+}
+
+.lihat-semua:hover { color: var(--accent-hover); gap: 8px; }
+
+.review-body { padding: 0 24px; }
+
+.review-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.review-item:last-child { border-bottom: none; }
+
+.review-reviewer {
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.review-place {
+    font-size: .8rem;
+    color: var(--text-muted);
+}
+
+.review-date {
+    font-size: .78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.review-text {
+    font-size: .875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 10px 0 8px;
+    font-style: italic;
+}
+
+.rating i { color: var(--warning); font-size: .85rem; }
+
+/* ============================================================
+   SEARCH BOX
+   ============================================================ */
+
+.search-box {
+    max-width: 320px;
+    position: relative;
+}
+
+.search-box input {
+    padding-left: 40px;
+    border-radius: 10px !important;
+    border: 1.5px solid var(--border-color);
+    font-family: var(--font);
+    font-size: .875rem;
+    transition: var(--transition);
+    height: 42px;
+}
+
+.search-box input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+    outline: none;
+}
+
+.search-box .search-icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: .85rem;
+    pointer-events: none;
+}
+
+/* ============================================================
+   DATA TABLE
+   ============================================================ */
+
+.data-card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.data-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.table {
+    margin-bottom: 0;
+    font-size: .875rem;
+    font-family: var(--font);
+}
+
+.table thead th {
+    background: #f8fafc;
+    color: var(--text-muted);
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    padding: 14px 16px;
+}
+
+/* Custom Colored Table Headers */
+.table thead.table-dark th {
+    background-color: var(--secondary-emerald) !important;
+    color: #ffffff !important;
+    border-bottom: 2px solid var(--accent) !important;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .8px;
+    padding: 14px 16px;
+    text-transform: uppercase;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    padding: 14px 16px;
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.table tbody tr:hover { background: #f8fafc; }
+
+.wisata-thumb,
+.table img {
+    width: 64px;
+    height: 64px;
     object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
 }
 
-/* ==================================
-   FORM ADMIN
-================================== */
-
-.admin-form-card{
-    background: white;
-    border-radius: 15px;
-    padding: 25px;
+.nama-wisata {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: .875rem;
+    margin-bottom: 3px;
 }
 
-.admin-form-card label{
+.deskripsi-singkat {
+    font-size: .78rem;
+    color: var(--text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.badge-kategori {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: .75rem;
     font-weight: 600;
 }
 
-.admin-form-card .form-control,
-.admin-form-card .form-select{
-    border-radius: 10px;
-}
+/* ============================================================
+   ACTION BUTTONS
+   ============================================================ */
 
-/* ==================================
-   BUTTON
-================================== */
-
-.btn-admin{
-    background: #000;
-    color: white;
-    border: none;
-}
-
-.btn-admin:hover{
-    background: #333;
-    color: white;
-}
-
-.btn-edit{
-    background: #ffc107;
-    color: black;
-}
-
-.btn-delete{
-    background: #dc3545;
-    color: white;
-}
-
-/* ==================================
-   RESPONSIVE
-================================== */
-
-@media (max-width: 991px){
-
-    .admin-sidebar{
-        min-height: auto;
-        height: auto;
-    }
-
-    .admin-content{
-        padding: 20px;
-    }
-
-    .content-header h2{
-        font-size: 1.5rem;
-    }
-
-    .dashboard-card{
-        min-height: auto;
-    }
-
-    .dashboard-icon{
-        margin-bottom: 15px;
-    }
-
-}
-
-@media (max-width: 768px){
-
-    .admin-user{
-        font-size: 1.2rem;
-    }
-
-    .sidebar-link{
-        font-size: 0.95rem;
-    }
-
-    .review-section{
-        padding: 20px;
-    }
-
-    .content-header h2{
-        font-size: 1.3rem;
-    }
-}
-
-/* ==================================
-   KELOLA WISATA
-================================== */
-
-.page-header{
-    margin-bottom: 25px;
-}
-
-.page-header h2{
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.search-box{
-    max-width: 400px;
-}
-
-.search-box .form-control{
-    border-radius: 10px 0 0 10px;
-    border: 1px solid #ddd;
-}
-
-.search-box .btn{
-    border-radius: 0 10px 10px 0;
-}
-
-/* Card tabel */
-
-.data-card{
-    background: #fff;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,.08);
-}
-
-/* Tabel */
-
-.table{
-    margin-bottom: 0;
-}
-
-.table thead th{
-    background: #212529;
-    color: white;
-    border: none;
-    padding: 15px;
-}
-
-.table tbody td{
-    vertical-align: middle;
-    padding: 15px;
-}
-
-.table tbody tr:hover{
-    background: #f8f9fa;
-}
-
-/* Thumbnail wisata */
-
-.wisata-thumb{
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-/* Nama wisata */
-
-.nama-wisata{
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.deskripsi-singkat{
-    font-size: 13px;
-    color: #666;
-}
-
-/* Badge kategori */
-
-.badge-kategori{
-    background: #212529;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-}
-
-/* Tombol aksi */
-
-.btn-action{
-    width: 36px;
-    height: 36px;
-
+.btn-action {
+    width: 34px;
+    height: 34px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 8px;
+    font-size: .85rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
 }
 
-.btn-edit{
-    background: #ffc107;
-    color: black;
+.btn-edit {
+    background: rgba(245,158,11,.15);
+    color: var(--warning);
+}
+.btn-edit:hover {
+    background: var(--warning);
+    color: #fff;
+    transform: translateY(-1px);
 }
 
-.btn-delete{
-    background: #dc3545;
-    color: white;
+.btn-delete {
+    background: rgba(239,68,68,.12);
+    color: var(--danger);
+}
+.btn-delete:hover {
+    background: var(--danger);
+    color: #fff;
+    transform: translateY(-1px);
 }
 
-.btn-edit:hover{
-    background: #e0a800;
+.btn-admin {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 9px 20px;
+    font-size: .875rem;
+    font-weight: 600;
+    font-family: var(--font);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
 }
 
-.btn-delete:hover{
-    background: #bb2d3b;
+.btn-admin:hover {
+    background: var(--accent-hover);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16,185,129,.3);
 }
 
-/* ==================================
-   MODAL CRUD
-================================== */
+/* ============================================================
+   FORM ADMIN
+   ============================================================ */
 
-.modal-content{
+.admin-form-card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    padding: 28px;
+}
+
+.admin-form-card label {
+    font-weight: 600;
+    font-size: .85rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.admin-form-card .form-control,
+.admin-form-card .form-select {
+    border-radius: 10px;
+    border: 1.5px solid var(--border-color);
+    font-family: var(--font);
+    font-size: .875rem;
+    height: 44px;
+    transition: var(--transition);
+}
+
+.admin-form-card .form-control:focus,
+.admin-form-card .form-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.modal-content {
     border: none;
     border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0,0,0,.15);
+    font-family: var(--font);
 }
 
-.modal-header{
-    background: #212529;
-    color: white;
+.modal-header {
+    background: var(--sidebar-bg);
+    color: #fff;
+    padding: 20px 24px;
+    border: none;
 }
 
-.modal-header .btn-close{
-    filter: invert(1);
+.modal-header .modal-title {
+    font-size: 1rem;
+    font-weight: 700;
 }
 
-.modal-body{
-    padding: 25px;
+.modal-header .btn-close {
+    filter: invert(1) grayscale(1) brightness(2);
+    opacity: .7;
 }
 
-.modal-body label{
+.modal-body {
+    padding: 28px 24px;
+}
+
+.modal-body label {
+    font-size: .85rem;
     font-weight: 600;
-    margin-bottom: 8px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
 }
 
 .modal-body .form-control,
-.modal-body .form-select{
+.modal-body .form-select {
     border-radius: 10px;
-    min-height: 45px;
+    border: 1.5px solid var(--border-color);
+    font-family: var(--font);
+    font-size: .875rem;
+    min-height: 44px;
+    transition: var(--transition);
 }
 
-.modal-body textarea{
-    resize: none;
+.modal-body .form-control:focus,
+.modal-body .form-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
 }
 
-.modal-footer{
-    border-top: none;
-    padding: 20px;
+.modal-body textarea { resize: none; height: auto !important; }
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+    padding: 16px 24px;
+    gap: 10px;
 }
 
-/* Preview foto */
-
-.preview-image{
-    width: 120px;
-    height: 120px;
+.preview-image {
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 12px;
-    margin-top: 10px;
+    border: 2px solid var(--border-color);
+    margin-top: 8px;
+}
+
+/* ============================================================
+   ULASAN TABLE SPECIFIC
+   ============================================================ */
+
+.star-rating i { color: var(--warning); font-size: .85rem; }
+.star-empty i  { color: var(--border-color); }
+
+/* ============================================================
+   PAGINATION STYLING — Professional Tourism Style
+   ============================================================ */
+
+.pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.pagination-info {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.pagination {
+    display: flex !important;
+    align-items: center;
+    gap: 4px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none;
+    border: none !important;
+}
+
+.pagination .page-item {
+    border: none !important;
+}
+
+/* Number buttons */
+.pagination .page-item .page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px !important;
+    background: #ffffff !important;
+    color: var(--secondary-emerald) !important;
+    border: 1.5px solid #d1e8e4 !important;
+    border-radius: 8px !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+    cursor: pointer;
+}
+
+.pagination .page-item .page-link:hover {
+    background: var(--secondary-emerald) !important;
+    color: #ffffff !important;
+    border-color: var(--secondary-emerald) !important;
+    box-shadow: 0 4px 12px rgba(29,92,83,0.25) !important;
+    transform: translateY(-1px);
+}
+
+/* Active page */
+.pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, var(--secondary-emerald), var(--primary-emerald)) !important;
+    color: #ffffff !important;
+    border-color: var(--primary-emerald) !important;
+    box-shadow: 0 4px 14px rgba(29,92,83,0.35) !important;
+    transform: none;
+    cursor: default;
+}
+
+.pagination .page-item.active .page-link:hover {
+    background: linear-gradient(135deg, var(--secondary-emerald), var(--primary-emerald)) !important;
+    transform: none;
+    box-shadow: 0 4px 14px rgba(29,92,83,0.35) !important;
+}
+
+/* Prev / Next arrow buttons */
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    min-width: auto;
+    padding: 0 14px !important;
+    gap: 5px;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    border-radius: 8px !important;
+}
+
+/* Ellipsis / dots */
+.pagination .page-item.dots .page-link {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: var(--text-muted) !important;
+    font-weight: 700;
+    pointer-events: none;
+    box-shadow: none !important;
+    min-width: 28px;
+}
+
+/* Disabled state */
+.pagination .page-item.disabled .page-link {
+    background: #f1f5f9 !important;
+    color: #b0bec5 !important;
+    border-color: #e2e8f0 !important;
+    cursor: not-allowed !important;
+    opacity: 0.7;
+    box-shadow: none !important;
+    transform: none;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 991.98px) {
+    .admin-sidebar {
+        width: 220px;
+        min-width: 220px;
+        padding: 20px 12px;
+    }
+    .admin-content { padding: 20px; }
+    .stat-number { font-size: 1.8rem; }
+}
+
+@media (max-width: 767.98px) {
+    .admin-wrapper { flex-direction: column; }
+    .admin-sidebar {
+        width: 100%;
+        min-width: unset;
+        height: auto;
+        position: static;
+        min-height: unset;
+    }
+    .admin-content { padding: 16px; }
+    .page-header h2, .content-header h2 { font-size: 1.3rem; }
 }

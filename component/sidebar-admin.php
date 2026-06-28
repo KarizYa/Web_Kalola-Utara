@@ -2,88 +2,84 @@
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
-<div class="admin-sidebar">
+<aside class="admin-sidebar">
+
+    <!-- Top: User Info + Menu -->
     <div>
-        <div class="admin-user mb-4">
-            <i class="fa-regular fa-circle-user"></i>
-            <span>Admin</span>
+        <!-- Admin User Block -->
+        <div class="admin-user">
+            <div class="admin-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="admin-user-info">
+                <span class="admin-name">Administrator</span>
+                <span class="admin-role">Super Admin</span>
+            </div>
         </div>
-        <ul class="list-unstyled">
+
+        <!-- Menu Label -->
+        <div class="sidebar-label">Main Menu</div>
+
+        <!-- Navigation -->
+        <ul class="sidebar-menu">
+
             <li>
-                <a href="dashboard.php"
+                <a href="/project-bootstrap/admin/dashboard.php"
                    class="sidebar-link <?= ($currentPage == 'dashboard.php') ? 'active' : ''; ?>">
-                    <i class="fa-solid fa-chart-column"></i>
-                    Dashboard Admin
+                    <i class="fas fa-chart-line sidebar-icon"></i>
+                    Dashboard
                 </a>
             </li>
-            <li>
-                <a href="wisata.php"
-                   class="sidebar-link <?= ($currentPage == 'wisata.php') ? 'active' : ''; ?>">
 
-                    <i class="fa-regular fa-image"></i>
+            <li>
+                <a href="/project-bootstrap/admin/wisata.php"
+                   class="sidebar-link <?= ($currentPage == 'wisata.php') ? 'active' : ''; ?>">
+                    <i class="fas fa-mountain-sun sidebar-icon"></i>
                     Kelola Wisata
                 </a>
             </li>
-            <li>
-                <a href="budaya.php"
-                   class="sidebar-link <?= ($currentPage == 'budaya.php') ? 'active' : ''; ?>">
 
-                    <i class="fa-solid fa-book-open"></i>
+            <li>
+                <a href="/project-bootstrap/admin/budaya.php"
+                   class="sidebar-link <?= ($currentPage == 'budaya.php') ? 'active' : ''; ?>">
+                    <i class="fas fa-masks-theater sidebar-icon"></i>
                     Kelola Budaya
                 </a>
             </li>
 
             <li>
-                <a href="kuliner.php"
+                <a href="/project-bootstrap/admin/kuliner.php"
                    class="sidebar-link <?= ($currentPage == 'kuliner.php') ? 'active' : ''; ?>">
-                    <i class="fa-solid fa-utensils"></i>
+                    <i class="fas fa-utensils sidebar-icon"></i>
                     Kelola Kuliner
                 </a>
             </li>
 
             <li>
-                <a href="ulasan.php"
+                <a href="/project-bootstrap/admin/ulasan.php"
                    class="sidebar-link <?= ($currentPage == 'ulasan.php') ? 'active' : ''; ?>">
-
-                    <i class="fa-regular fa-comment-dots"></i>
+                    <i class="fas fa-star sidebar-icon"></i>
                     Kelola Ulasan
-
                 </a>
             </li>
 
             <li>
-                <a href="berita.php"
+                <a href="/project-bootstrap/admin/berita.php"
                    class="sidebar-link <?= ($currentPage == 'berita.php') ? 'active' : ''; ?>">
-
-                    <i class="fa-regular fa-calendar"></i>
-                    Kelola Event & Berita
-
+                    <i class="fas fa-newspaper sidebar-icon"></i>
+                    Event &amp; Berita
                 </a>
             </li>
 
         </ul>
-
     </div>
 
-    <div>
-
-        <div class="admin-profile">
-
-            <i class="fa-regular fa-circle-user me-2"></i>
-
-            Admin Kolut
-
-        </div>
-
-        <a href="../admin/auth/logout.php"
-           class="logout-btn">
-
-            <i class="fa-solid fa-right-from-bracket me-2"></i>
-
+    <!-- Bottom: Logout -->
+    <div class="sidebar-footer">
+        <a href="/project-bootstrap/admin/auth/logout.php" class="sidebar-logout">
+            <i class="fas fa-right-from-bracket sidebar-icon"></i>
             Logout
-
         </a>
-
     </div>
 
-</div>
+</aside>
