@@ -8,8 +8,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <!-- Logo / Brand -->
     <a class="navbar-brand d-flex align-items-center gap-2" href="/project-bootstrap/pengguna/beranda.php">
-      <div class="brand-logo-wrapper">
-        <i class="fas fa-compass brand-icon"></i>
+      <div>
+         <img src="../image/logo.png" alt="Logo Kolaka Utara" class="brand-logo" style="width: 50px; height: 50px; object-fit: cover;">
       </div>
       <div class="brand-text-wrapper">
         <span class="brand-title fw-bold">PESONA</span>

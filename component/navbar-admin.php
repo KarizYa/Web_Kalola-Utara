@@ -5,9 +5,9 @@
 
     <!-- Brand -->
     <a href="/project-bootstrap/admin/dashboard.php" class="admin-navbar-brand">
-        <div class="admin-navbar-logo">
-            <i class="fas fa-compass"></i>
-        </div>
+        <div>
+         <img src="../image/logo.png" alt="Logo Kolaka Utara" class="brand-logo" style="width: 50px; height: 50px; object-fit: cover;">
+      </div>
         <div class="admin-navbar-text">
             <span class="brand-title">PESONA</span>
             <span class="brand-sub">KOLAKA UTARA</span>

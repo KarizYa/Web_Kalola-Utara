@@ -38,13 +38,13 @@
       <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-accent">Hubungi Kami</h5>
         <p class="text-white-50" style="font-size: 14px;">
-          <i class="fas fa-home me-2"></i> Dinas Pariwisata Kolaka Utara, Lasusua, Sultra
+          <i class="fas fa-home me-2"></i> Jl. Komplek Perkantoran Pemerintah Daerah Kabupaten Kolaka Utara
         </p>
         <p class="text-white-50" style="font-size: 14px;">
-          <i class="fas fa-envelope me-2"></i> info@kolakautarakab.go.id
+          <i class="fas fa-envelope me-2"></i> kolutkab@yahoo.co.id
         </p>
         <p class="text-white-50" style="font-size: 14px;">
-          <i class="fas fa-phone me-2"></i> +62 405 2321 xxx
+          <i class="fas fa-phone me-2"></i> +62 813 8008 0815
         </p>
       </div>
 
@@ -52,13 +52,13 @@
       <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
         <h5 class="text-uppercase mb-4 font-weight-bold text-accent">Ikuti Kami</h5>
         <div class="d-flex gap-3">
-          <a href="#" class="btn btn-outline-light btn-sm rounded-circle social-icon" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+          <a href="https://www.facebook.com/pemerintahkolakautara" target="_blank" class="btn btn-outline-light btn-sm rounded-circle social-icon" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
             <i class="fab fa-facebook-f"></i>
           </a>
-          <a href="#" class="btn btn-outline-light btn-sm rounded-circle social-icon" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+          <a href="https://www.instagram.com/kolaka.utara/" target="_blank" class="btn btn-outline-light btn-sm rounded-circle social-icon" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="#" class="btn btn-outline-light btn-sm rounded-circle social-icon" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+          <a href="https://www.youtube.com/@kolakautara" target="_blank" class="btn btn-outline-light btn-sm rounded-circle social-icon" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
             <i class="fab fa-youtube"></i>
           </a>
         </div>
@@ -75,7 +75,7 @@
         <p class="text-white-50" style="font-size: 13px;">
           © <?= date('Y') ?> Copyright: 
           <a href="#" class="text-accent text-decoration-none fw-semibold">
-            <strong>Pemerintah Kabupaten Kolaka Utara</strong>
+            <strong>Pemerintah Daerah Kabupaten Kolaka Utara</strong>
           </a>. All rights reserved.
         </p>
       </div>

@@ -221,11 +221,10 @@ if ($error_code === 'invalid') $error_msg = 'Username atau kata sandi salah.';
 
     <!-- Brand -->
     <div class="login-brand">
-        <div class="login-brand-icon">
-            <i class="fas fa-compass"></i>
-        </div>
+         <div>
+         <img src="../../image/logo.png" alt="Logo Kolaka Utara" class="brand-logo" style="width: 70px; height: 70px; object-fit: cover;">
+      </div>
         <h1>PESONA KOLAKA UTARA</h1>
-        <p>Portal Pariwisata Resmi</p>
     </div>
 
     <!-- Card -->
