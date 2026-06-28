@@ -20,68 +20,78 @@ function formatHarga($harga) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kuliner Khas Kolaka Utara</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="pengguna.css">
-    <style>
-        .kuliner-hero { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); color: #fff; }
-        .kuliner-hero .informasi-line { width: 80px; height: 4px; background: #ffc107; margin: 1.5rem auto; }
-        .card-kuliner:hover { transform: translateY(-5px); transition: transform .25s ease; }
-        .card-kuliner .card-img-top { min-height: 200px; object-fit: cover; }
-        .badge-kuliner { background: rgba(0,0,0,.7); }
-    </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="pengguna.css?v=3">
 </head>
 <body>
 
 <?php include __DIR__ . '/../component/navbar.php'; ?>
 
-<section class="kuliner-hero py-5">
-    <div class="container text-center">
-        <h1 class="display-5 fw-bold">Rasakan Kuliner Autentik Kolaka Utara</h1>
-        <div class="informasi-line mx-auto"></div>
-        <p class="lead text-white-75 mb-4">
-            Temukan hidangan tradisional dengan cita rasa lokal, disajikan dari desa hingga pesisir.
-            Pilih kuliner favoritmu dan lihat detail lengkap tiap sajian khas daerah.
+<!-- Header -->
+<section class="hero-page text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Kuliner Tradisional</h1>
+        <div class="garis-aesthetic mx-auto mb-3"></div>
+        <p class="lead text-white-50">
+            Temukan hidangan autentik dengan cita rasa lokal khas Kolaka Utara yang disajikan dari pegunungan hingga pesisir pantai.
         </p>
     </div>
 </section>
 
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Konten Kuliner -->
+<section class="py-5">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-5">
             <div>
-                <h2 class="h4 fw-bold mb-1">Daftar Kuliner</h2>
-                <p class="text-muted mb-0">Kuliner populer dan khas Kolaka Utara.</p>
+                <h2 class="fw-bold text-primary-color h4 mb-1">Daftar Kuliner</h2>
+                <p class="text-muted small mb-0">Cita rasa tradisional yang menggugah selera</p>
             </div>
             <div>
-                <span class="badge bg-warning text-dark px-3 py-2">Total: <?= count($kuliner) ?></span>
+                <span class="badge bg-secondary-subtle text-secondary px-3 py-2 rounded-pill fw-semibold">
+                    Total: <?= count($kuliner) ?> Menu
+                </span>
             </div>
         </div>
 
         <?php if(empty($kuliner)): ?>
-            <div class="alert alert-secondary">Belum ada data kuliner. Silakan kembali lagi nanti.</div>
+            <div class="alert alert-secondary border-0 rounded-4 p-5 text-center">
+                <i class="fas fa-utensils fa-3x mb-3 text-muted"></i>
+                <h5 class="fw-bold">Belum Ada Data Kuliner</h5>
+                <p class="text-muted mb-0">Silakan kembali lagi nanti untuk melihat daftar kuliner khas kami.</p>
+            </div>
         <?php else: ?>
             <div class="row g-4">
                 <?php foreach($kuliner as $item): ?>
                     <div class="col-lg-4 col-md-6">
-                        <div class="card card-kuliner border-0 shadow-sm h-100 overflow-hidden">
-                            <?php if(!empty($item['foto'])): ?>
-                                <img src="../image/uploads/kuliner/<?= htmlspecialchars($item['foto']) ?>" class="card-img-top" alt="<?= htmlspecialchars($item['nama']) ?>">
-                            <?php else: ?>
-                                <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:200px;">Tanpa Foto</div>
-                            <?php endif; ?>
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title fw-bold"><?= htmlspecialchars($item['nama']) ?></h5>
-                                <p class="text-muted mb-3"><?= htmlspecialchars(substr($item['deskripsi'], 0, 110)); ?><?= strlen($item['deskripsi']) > 110 ? '...' : '' ?></p>
-                                <div class="mb-3">
-                                    <span class="badge badge-kuliner text-white me-1"><i class="fa-solid fa-map-marker-alt me-1"></i> <?= htmlspecialchars($item['lokasi']) ?></span>
-                                    <span class="badge badge-kuliner text-white"><i class="fa-solid fa-clock me-1"></i> <?= formatJam($item['jam_operasional']) ?></span>
+                        <div class="card card-kuliner-modern h-100 d-flex flex-column">
+                            <div class="kuliner-img-wrapper">
+                                <?php 
+                                $foto_path = "../image/uploads/kuliner/" . $item['foto'];
+                                $has_foto = (!empty($item['foto']) && file_exists(__DIR__ . '/' . $foto_path));
+                                $foto_url = $has_foto ? $foto_path : '../image/default-kuliner.png';
+                                ?>
+                                <img src="<?= $foto_url ?>" alt="<?= htmlspecialchars($item['nama']) ?>">
+                            </div>
+                            <div class="card-body d-flex flex-column p-4">
+                                <h5 class="card-title fw-bold text-primary-color mb-2"><?= htmlspecialchars($item['nama']) ?></h5>
+                                <p class="text-muted small mb-3"><?= htmlspecialchars(substr($item['deskripsi'], 0, 120)); ?>...</p>
+                                
+                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                    <span class="badge-kuliner-pill"><i class="fa-solid fa-map-marker-alt me-1 text-accent"></i> <?= htmlspecialchars($item['lokasi']) ?></span>
+                                    <span class="badge-kuliner-pill"><i class="fa-solid fa-clock me-1 text-accent"></i> <?= formatJam($item['jam_operasional']) ?></span>
                                 </div>
-                                <div class="mt-auto">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="text-warning fw-semibold"><?= formatHarga($item['harga']) ?></span>
-                                        <a href="detail-kuliner/detail-kuliner.php?id=<?= $item['id'] ?>" class="btn btn-sm btn-dark">Detail</a>
-                                    </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top border-light">
+                                    <span class="fw-bold text-primary-color" style="font-size: 1.1rem;"><?= formatHarga($item['harga']) ?></span>
+                                    <a href="detail-kuliner/detail-kuliner.php?id=<?= $item['id'] ?>" class="btn btn-sm btn-primary-custom py-2 px-3" style="font-size: 0.85rem;">
+                                        Detail
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -92,6 +102,9 @@ function formatHarga($harga) {
     </div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<?php include __DIR__ . '/../component/footer.php'; ?>
+
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

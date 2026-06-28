@@ -18,7 +18,7 @@
 
         <div class="d-flex align-items-center">
 
-            <a href="../index.php"
+            <a href="../pengguna/beranda.php"  target="_blank"
                class="btn btn-light fw-semibold">
                 Lihat Website
             </a>
